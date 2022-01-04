@@ -1,0 +1,3 @@
+class HiCache {
+  HiCache._();
+}
