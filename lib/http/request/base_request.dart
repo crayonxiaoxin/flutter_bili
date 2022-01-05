@@ -1,3 +1,7 @@
+import 'package:flutter_bili/http/dao/login_dao.dart';
+
+import '../../const.dart';
+
 /// 请求方法
 enum HttpMethod { GET, POST, DELETE }
 
@@ -30,6 +34,10 @@ abstract class BaseRequest {
       uri = Uri.http(authority(), pathStr, params);
     }
     print("url:${uri.toString()}");
+    // 需要登录的接口，携带登录令牌
+    if (needLogin()) {
+      addHeader(LoginDao.KEY_BOARDING_PASS, LoginDao.getBoardingPass());
+    }
     return uri.toString();
   }
 
@@ -43,7 +51,11 @@ abstract class BaseRequest {
     return this;
   }
 
-  Map<String, String> headers = Map();
+  // 统一header
+  Map<String, String> headers = {
+    "course-flag": Const.courseFlag,
+    "auth-token": Const.authToken
+  };
 
   /// 添加 header
   BaseRequest addHeader(String k, Object v) {

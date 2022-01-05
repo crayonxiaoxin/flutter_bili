@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/http/core/hi_error.dart';
+import 'package:flutter_bili/http/core/hi_net.dart';
+import 'package:flutter_bili/http/dao/login_dao.dart';
+import 'package:flutter_bili/http/request/notice_request.dart';
+import 'package:flutter_bili/page/registration_page.dart';
+import 'package:flutter_bili/util/color.dart';
 
-import 'http/db/hi_cache.dart';
+import 'db/hi_cache.dart';
 
 void main() {
   HiCache.preInit(); // 初始化 cache
@@ -14,33 +20,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: white,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: RegistrationPage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -59,7 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
     //     .addParam("requestPrams", "abc");
     // var result = await HiNet.getInstance().fire(request);
     // print(result);
-    test2();
+    // test2();
+    // testLogin();
+    testNotice();
     setState(() {
       _counter++;
     });
@@ -69,6 +60,35 @@ class _MyHomePageState extends State<MyHomePage> {
     HiCache.getInstance().setString("bb", "hello");
     var value = HiCache.getInstance().get("bb");
     print(value);
+  }
+
+  void testLogin() async {
+    try {
+      // var result = LoginDao.register("123", "password", "123333", "1234");
+      var result = LoginDao.login("111", "111");
+      print("test: " + result);
+    } on NeedAuth catch (e) {
+      print(e);
+    } on NeedLogin catch (e) {
+      print(e);
+    } on HiNetError catch (e) {
+      print(e);
+    }
+  }
+
+  void testNotice() async {
+    try {
+      var request = NoticeRequest();
+      request.addParam("pageIndex", 0).addParam("pageSize", 10);
+      var result = HiNet.getInstance().fire(request);
+      print(result);
+    } on NeedAuth catch (e) {
+      print(e);
+    } on NeedLogin catch (e) {
+      print(e);
+    } on HiNetError catch (e) {
+      print(e);
+    }
   }
 
   @override
