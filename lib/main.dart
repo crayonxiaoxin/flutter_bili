@@ -3,15 +3,37 @@ import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/core/hi_net.dart';
 import 'package:flutter_bili/http/dao/login_dao.dart';
 import 'package:flutter_bili/http/request/notice_request.dart';
+import 'package:flutter_bili/model/video_model.dart';
+import 'package:flutter_bili/page/home_page.dart';
 import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
+import 'package:flutter_bili/page/video_detail_page.dart';
 import 'package:flutter_bili/util/color.dart';
 
 import 'db/hi_cache.dart';
 
 void main() {
   HiCache.preInit(); // 初始化 cache
-  runApp(MyApp());
+  runApp(BiliApp());
+}
+
+class BiliApp extends StatefulWidget {
+  const BiliApp({Key? key}) : super(key: key);
+
+  @override
+  _BiliAppState createState() => _BiliAppState();
+}
+
+class _BiliAppState extends State<BiliApp> {
+  BiliRouterDelegate _routerDelegate = BiliRouterDelegate();
+
+  @override
+  Widget build(BuildContext context) {
+    var widget = Router(routerDelegate: _routerDelegate);
+    return MaterialApp(
+      home: widget,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -134,4 +156,59 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRoutePath> {
+  GlobalKey<NavigatorState>? navigatorKey;
+
+  BiliRouterDelegate() : this.navigatorKey = GlobalKey<NavigatorState>();
+  List<MaterialPage> pages = [];
+  VideoModel? videoModel;
+  BiliRoutePath? path;
+
+  @override
+  Widget build(BuildContext context) {
+    // 构建路由栈
+    pages = [
+      pageWrap(HomePage(
+        onJump2Detail: (videoModel) {
+          this.videoModel = videoModel;
+          notifyListeners();
+        },
+      )),
+      if (videoModel != null) pageWrap(VideoDetailPage(videoModel!))
+    ];
+    return Navigator(
+      key: navigatorKey,
+      pages: pages,
+      onPopPage: (route, result) {
+        // 在这里控制是否可以返回
+        if (!route.didPop(result)) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+    );
+  }
+
+  @override
+  Future<void> setNewRoutePath(BiliRoutePath path) async {
+    this.path = path;
+  }
+}
+
+/// 定义路由数据，path
+class BiliRoutePath {
+  final String location;
+
+  BiliRoutePath.home() : location = "/";
+
+  BiliRoutePath.detail() : location = "/detail";
+}
+
+/// 创建页面
+pageWrap(Widget child) {
+  return MaterialPage(key: ValueKey(child.hashCode), child: child);
 }
