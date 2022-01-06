@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/util/adapt.dart';
 
 class LoginEffect extends StatefulWidget {
-  const LoginEffect({Key? key, this.protext = false}) : super(key: key);
-  final bool protext;
+  const LoginEffect({Key? key, this.protect = false}) : super(key: key);
+  final bool protect;
 
   @override
   _LoginEffectState createState() => _LoginEffectState();
@@ -12,6 +13,7 @@ class _LoginEffectState extends State<LoginEffect> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: Adapt.px(150),
       padding: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           color: Colors.grey[100],
@@ -24,7 +26,7 @@ class _LoginEffectState extends State<LoginEffect> {
           Padding(
             padding: EdgeInsets.all(20),
             child: Image(
-              image: AssetImage("images/logo.png"),
+              image: AssetImage("assets/images/logo.png"),
             ),
           ),
           _image(false)
@@ -34,12 +36,13 @@ class _LoginEffectState extends State<LoginEffect> {
   }
 
   _image(bool left) {
-    var headerLeft = widget.protext
+    var headerLeft = widget.protect
         ? "images/head_left_protect.png"
         : "images/head_left.png";
-    var headerRight = widget.protext
+    var headerRight = widget.protect
         ? "images/head_right_protect.png"
         : "images/head_right.png";
-    return Image(image: AssetImage(left ? headerLeft : headerRight));
+    return Image(
+        image: AssetImage("assets/" + (left ? headerLeft : headerRight)));
   }
 }

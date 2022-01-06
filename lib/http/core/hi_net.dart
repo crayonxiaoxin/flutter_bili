@@ -47,10 +47,10 @@ class HiNet {
   }
 
   Future<dynamic> send<T>(BaseRequest request) async {
-    printLog('url:${request.url()}');
-    printLog('method:${request.httpMethod()}');
-    request.addHeader("token", "123");
-    printLog('header:${request.headers}');
+    // printLog('url:${request.url()}');
+    // printLog('method:${request.httpMethod()}');
+    // request.addHeader("token", "123");
+    // printLog('header:${request.headers}');
 
     /// 切换不同的网络库
     // var adapter = MockAdapter();

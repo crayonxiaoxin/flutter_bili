@@ -8,7 +8,8 @@ class LoginInput extends StatefulWidget {
       this.onFocusChanged,
       this.lineStretch = false,
       this.obscureText = false,
-      this.keyboardType})
+      this.keyboardType,
+      this.controller})
       : super(key: key);
   final String title;
   final String hint;
@@ -17,6 +18,7 @@ class LoginInput extends StatefulWidget {
   final bool? lineStretch; // 下划线是否拉伸
   final bool? obscureText; // 密码
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   @override
   _LoginInputState createState() => _LoginInputState();
@@ -79,6 +81,7 @@ class _LoginInputState extends State<LoginInput> {
       keyboardType: widget.keyboardType,
       cursorColor: primary,
       autofocus: !(widget.obscureText ?? false),
+      controller: widget.controller,
       style: TextStyle(
           fontSize: 16, color: Colors.black, fontWeight: FontWeight.w300),
       decoration: InputDecoration(

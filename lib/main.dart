@@ -3,6 +3,7 @@ import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/core/hi_net.dart';
 import 'package:flutter_bili/http/dao/login_dao.dart';
 import 'package:flutter_bili/http/request/notice_request.dart';
+import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
 import 'package:flutter_bili/util/color.dart';
 
@@ -19,11 +20,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: white,
       ),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: RegistrationPage(),
+      // home: RegistrationPage(),
+      // home: LoginPage(),
+      routes: <String, WidgetBuilder>{
+        '/': (context) => LoginPage(onJump2Register: () {
+              Navigator.pushNamed(context, '/register');
+            }),
+        '/login': (context) => LoginPage(onJump2Register: () {
+              Navigator.pushNamed(context, '/register');
+            }),
+        '/register': (context) => RegistrationPage(
+              onJump2Login: () {
+                Navigator.pushNamed(context, '/login');
+              },
+            ),
+      },
     );
   }
 }
@@ -65,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void testLogin() async {
     try {
       // var result = LoginDao.register("123", "password", "123333", "1234");
-      var result = LoginDao.login("111", "111");
+      var result = await LoginDao.login("111", "111");
       print("test: " + result);
     } on NeedAuth catch (e) {
       print(e);
@@ -80,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       var request = NoticeRequest();
       request.addParam("pageIndex", 0).addParam("pageSize", 10);
-      var result = HiNet.getInstance().fire(request);
+      var result = await HiNet.getInstance().fire(request);
       print(result);
     } on NeedAuth catch (e) {
       print(e);
