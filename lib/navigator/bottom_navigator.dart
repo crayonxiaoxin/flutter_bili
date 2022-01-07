@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/page/favorite_page.dart';
 import 'package:flutter_bili/page/home_page.dart';
 import 'package:flutter_bili/page/profile_page.dart';
@@ -16,32 +17,30 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   final _defaultColor = Colors.grey;
   final _activeColor = primary;
   int _currentIndex = 0;
-  final PageController _controller = PageController();
+  static const int initialPage = 0;
+  final PageController _controller = PageController(initialPage: initialPage);
+  List<Widget> pages = [];
+  bool hasBuild = false;
 
   @override
   Widget build(BuildContext context) {
+    pages = [HomePage(), RankingPage(), FavoritePage(), ProfilePage()];
+    if (!hasBuild) {
+      // 页面第一次打开时，通知打开的是哪个 tab
+      HiNavigator.getInstance()
+          .onBottomTabChange(initialPage, pages[initialPage]);
+      hasBuild = true;
+    }
     return Scaffold(
       body: PageView(
         controller: _controller,
         children: [HomePage(), RankingPage(), FavoritePage(), ProfilePage()],
-        onPageChanged: (index) {
-          setState(() {
-            // 控制选中的 tab
-            _currentIndex = index;
-          });
-        },
+        onPageChanged: (index) => _onJumpTo(index, pageChange: true),
         physics: NeverScrollableScrollPhysics(), // 禁止滑动翻页
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) {
-          // 让 pageView 显示对应 tab
-          _controller.jumpToPage(index);
-          setState(() {
-            // 控制选中的 tab
-            _currentIndex = index;
-          });
-        },
+        onTap: (index) => _onJumpTo(index, pageChange: false),
         // 禁止上下浮动
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: _defaultColor,
@@ -67,5 +66,18 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           icon,
           color: _activeColor,
         ));
+  }
+
+  _onJumpTo(int index, {bool pageChange = false}) {
+    if (pageChange) {
+      HiNavigator.getInstance().onBottomTabChange(index, pages[index]);
+    } else {
+      // 让 pageView 显示对应 tab
+      _controller.jumpToPage(index);
+    }
+    setState(() {
+      // 控制选中的 tab
+      _currentIndex = index;
+    });
   }
 }
