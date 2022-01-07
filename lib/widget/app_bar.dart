@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 /// 自定义顶部 appBar
-appBar(String title, String rightTitle, VoidCallback? rightButtonClick) {
+appBar(String title, String rightTitle, VoidCallback? rightButtonClick,
+    {VoidCallback? backPressed}) {
   return AppBar(
     centerTitle: false,
     titleSpacing: 0,
-    leading: BackButton(),
+    leading: BackButton(
+      onPressed: backPressed,
+    ),
     title: Text(
       title,
       style: TextStyle(fontSize: 18),

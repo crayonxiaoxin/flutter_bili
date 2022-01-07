@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/page/home_page.dart';
+import 'package:flutter_bili/navigator/bottom_navigator.dart';
 import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
 import 'package:flutter_bili/page/video_detail_page.dart';
+
+typedef RouteChangeListener(RouteStatusInfo current, RouteStatusInfo? pre);
 
 /// 创建页面
 pageWrap(Widget child) {
@@ -29,7 +31,7 @@ RouteStatus getStatus(MaterialPage page) {
     return RouteStatus.login;
   } else if (page.child is RegistrationPage) {
     return RouteStatus.registration;
-  } else if (page.child is HomePage) {
+  } else if (page.child is BottomNavigator) {
     return RouteStatus.home;
   } else if (page.child is VideoDetailPage) {
     return RouteStatus.detail;
@@ -44,4 +46,74 @@ class RouteStatusInfo {
   final Widget page;
 
   RouteStatusInfo(this.routeStatus, this.page);
+}
+
+/// 监听路由页面跳转
+/// 感知当前页面是否压后台
+class HiNavigator extends _RouteJumpListener {
+  HiNavigator._();
+
+  RouteJumpListener? _routeJumpListener;
+  List<RouteChangeListener> _listeners = [];
+  RouteStatusInfo? _current; // 打开过的page
+  static HiNavigator? _instance;
+
+  static HiNavigator getInstance() {
+    if (_instance == null) {
+      _instance = HiNavigator._();
+    }
+    return _instance!;
+  }
+
+  /// 注册路由跳转逻辑
+  void registerRouteJumpListener(RouteJumpListener listener) {
+    this._routeJumpListener = listener;
+  }
+
+  void addListener(RouteChangeListener listener) {
+    if (!_listeners.contains(listener)) {
+      _listeners.add(listener);
+    }
+  }
+
+  void removeListener(RouteChangeListener listener) {
+    _listeners.remove(listener);
+  }
+
+  @override
+  void onJumpTo(RouteStatus routeStatus, {Map<dynamic, dynamic>? args}) {
+    this._routeJumpListener?.onJumpTo?.call(routeStatus, args: args);
+  }
+
+  /// 通知路由页面变化
+  void notify(List<MaterialPage> currentPages, List<MaterialPage> prePages) {
+    if (currentPages == prePages) return;
+    // 当前的页面信息
+    var current =
+        RouteStatusInfo(getStatus(currentPages.last), currentPages.last.child);
+    _notify(current);
+  }
+
+  void _notify(RouteStatusInfo current) {
+    print("hi_navigator: current: ${current.page}");
+    print("hi_navigator: pre: ${_current?.page}");
+    _listeners.forEach((listener) {
+      listener(current, _current);
+    });
+    _current = current;
+  }
+}
+
+/// 抽象类，供 HiNavigator 实现
+abstract class _RouteJumpListener {
+  void onJumpTo(RouteStatus routeStatus, {Map? args});
+}
+
+typedef OnJumpTo = void Function(RouteStatus routeStatus, {Map? args});
+
+/// 定义路由跳转逻辑要实现的功能
+class RouteJumpListener {
+  OnJumpTo? onJumpTo;
+
+  RouteJumpListener({this.onJumpTo});
 }

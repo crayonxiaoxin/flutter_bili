@@ -4,4 +4,6 @@ class Const {
   static const String courseFlag = "fa";
   static const String imoocId = "10388380";
   static const String orderId = "1659";
+  static const String login = "darklau";
+  static const String password = "123456";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/login_dao.dart';
+import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/util/string_util.dart';
 import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/widget/app_bar.dart';
@@ -9,9 +10,7 @@ import 'package:flutter_bili/widget/login_effect.dart';
 import 'package:flutter_bili/widget/login_input.dart';
 
 class RegistrationPage extends StatefulWidget {
-  final VoidCallback? onJump2Login;
-
-  const RegistrationPage({Key? key, this.onJump2Login}) : super(key: key);
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
@@ -29,7 +28,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("注册", "登录", widget.onJump2Login),
+      appBar: appBar("注册", "登录", () {
+        HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      }),
       body: Container(
         child: ListView(
           // 自适应键盘，防遮挡
@@ -142,7 +143,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       if (result['code'] == 0) {
         print("注册成功");
         showToast("注册成功");
-        widget.onJump2Login?.call();
+        HiNavigator.getInstance().onJumpTo(RouteStatus.login);
       } else {
         print(result['msg']);
         showWarnToast(result['msg']);
