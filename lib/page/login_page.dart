@@ -11,8 +11,10 @@ import 'package:flutter_bili/widget/login_input.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback? onJump2Register;
+  final VoidCallback? onSuccess;
 
-  const LoginPage({Key? key, this.onJump2Register}) : super(key: key);
+  const LoginPage({Key? key, this.onJump2Register, this.onSuccess})
+      : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -102,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
       if (result['code'] == 0) {
         print("登录成功");
         showToast("登录成功");
+        widget.onSuccess?.call();
       } else {
         print(result['msg']);
         showWarnToast(result['msg']);
