@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/home_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
@@ -14,14 +15,14 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
+class _HomePageState extends HiState<HomePage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   var listener;
   TabController? _controller;
 
   // var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "游戏", "娱乐", "音乐", "短片·手书·配音"];
-  List<HomeCategoryList> categoryList = [];
-  List<HomeBannerList> bannerList = [];
+  List<HomeCategory> categoryList = [];
+  List<HomeBanner> bannerList = [];
 
   @override
   void initState() {
@@ -57,7 +58,10 @@ class _HomePageState extends State<HomePage>
               child: TabBarView(
                   controller: _controller,
                   children: categoryList.map((tab) {
-                    return HomeTabPage(name: tab.name ?? "");
+                    return HomeTabPage(
+                      name: tab.name ?? "",
+                      bannerList: bannerList,
+                    );
                   }).toList()))
         ],
       ),
@@ -99,6 +103,7 @@ class _HomePageState extends State<HomePage>
       if (result.categoryList != null) {
         setState(() {
           categoryList = result.categoryList!;
+          bannerList = result.bannerList!;
           _controller = TabController(length: categoryList.length, vsync: this);
         });
       }

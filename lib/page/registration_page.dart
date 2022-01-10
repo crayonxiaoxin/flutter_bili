@@ -30,6 +30,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       appBar: appBar("注册", "登录", () {
         HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      }, backPressed: () {
+        // 这种方法传递参数，物理键返回无法获取数据
+        Navigator.maybePop(context, "test registration back pressed");
       }),
       body: Container(
         child: ListView(

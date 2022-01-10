@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/model/video_model.dart';
+import 'package:flutter_bili/model/home_entity.dart';
 
 class VideoDetailPage extends StatefulWidget {
-  final VideoModel videoModel;
+  final HomeVideo videoModel;
 
   const VideoDetailPage(
     this.videoModel, {

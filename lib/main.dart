@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/http/dao/login_dao.dart';
-import 'package:flutter_bili/model/video_model.dart';
+import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/bottom_navigator.dart';
 import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
@@ -183,7 +183,8 @@ class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
       _routeStatus = routeStatus;
       if (routeStatus == RouteStatus.detail) {
         if (args != null) {
-          this.videoModel = args['viewMo'];
+          this.videoModel = args['videoMo'];
+          print("args: $args");
         }
       }
       notifyListeners();
@@ -192,7 +193,7 @@ class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
 
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages = [];
-  VideoModel? videoModel;
+  HomeVideo? videoModel;
 
   @override
   Widget build(BuildContext context) {
@@ -227,6 +228,7 @@ class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
           key: navigatorKey,
           pages: pages,
           onPopPage: (route, result) {
+            print("pop $result");
             // 如果登录页面之前还有其他页面，如果未登录，则阻断返回
             // 如果只有一个页面，onWillPop 就会返回桌面，此时 onPopPage 就不会执行了
             if (route.settings is MaterialPage) {

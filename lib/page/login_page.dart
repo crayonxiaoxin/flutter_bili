@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bili/db/hi_cache.dart';
 import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/login_dao.dart';
@@ -30,8 +29,9 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     var lastLoginName = HiCache.getInstance().get(KEY_LOGIN_NAME);
     if (lastLoginName != null) {
-      showToast(lastLoginName);
+      // showToast(lastLoginName);
       controller.text = lastLoginName;
+      username = lastLoginName;
     }
     super.initState();
   }
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         if (Navigator.canPop(context)) {
           Navigator.maybePop(context);
         } else {
-          SystemNavigator.pop(); // 退出应用
+          HiNavigator.getInstance().exit(); // 退出应用
         }
       }),
       body: Container(

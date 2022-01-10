@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bili/navigator/bottom_navigator.dart';
 import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
@@ -64,6 +65,10 @@ class HiNavigator extends _RouteJumpListener {
       _instance = HiNavigator._();
     }
     return _instance!;
+  }
+
+  void exit() {
+    SystemNavigator.pop(); // 退出应用
   }
 
   /// 首页底部 tab 切换监听

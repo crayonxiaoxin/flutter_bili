@@ -3,18 +3,18 @@ import 'package:flutter_bili/model/home_entity.dart';
 
 HomeEntity $HomeEntityFromJson(Map<String, dynamic> json) {
   final HomeEntity homeEntity = HomeEntity();
-  final List<HomeBannerList>? bannerList =
-      jsonConvert.convertListNotNull<HomeBannerList>(json['bannerList']);
+  final List<HomeBanner>? bannerList =
+      jsonConvert.convertListNotNull<HomeBanner>(json['bannerList']);
   if (bannerList != null) {
     homeEntity.bannerList = bannerList;
   }
-  final List<HomeCategoryList>? categoryList =
-      jsonConvert.convertListNotNull<HomeCategoryList>(json['categoryList']);
+  final List<HomeCategory>? categoryList =
+      jsonConvert.convertListNotNull<HomeCategory>(json['categoryList']);
   if (categoryList != null) {
     homeEntity.categoryList = categoryList;
   }
-  final List<HomeVideoList>? videoList =
-      jsonConvert.convertListNotNull<HomeVideoList>(json['videoList']);
+  final List<HomeVideo>? videoList =
+      jsonConvert.convertListNotNull<HomeVideo>(json['videoList']);
   if (videoList != null) {
     homeEntity.videoList = videoList;
   }
@@ -29,8 +29,8 @@ Map<String, dynamic> $HomeEntityToJson(HomeEntity entity) {
   return data;
 }
 
-HomeBannerList $HomeBannerListFromJson(Map<String, dynamic> json) {
-  final HomeBannerList homeBannerList = HomeBannerList();
+HomeBanner $HomeBannerListFromJson(Map<String, dynamic> json) {
+  final HomeBanner homeBannerList = HomeBanner();
   final String? id = jsonConvert.convert<String>(json['id']);
   if (id != null) {
     homeBannerList.id = id;
@@ -66,7 +66,7 @@ HomeBannerList $HomeBannerListFromJson(Map<String, dynamic> json) {
   return homeBannerList;
 }
 
-Map<String, dynamic> $HomeBannerListToJson(HomeBannerList entity) {
+Map<String, dynamic> $HomeBannerListToJson(HomeBanner entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
   data['sticky'] = entity.sticky;
@@ -79,8 +79,8 @@ Map<String, dynamic> $HomeBannerListToJson(HomeBannerList entity) {
   return data;
 }
 
-HomeCategoryList $HomeCategoryListFromJson(Map<String, dynamic> json) {
-  final HomeCategoryList homeCategoryList = HomeCategoryList();
+HomeCategory $HomeCategoryListFromJson(Map<String, dynamic> json) {
+  final HomeCategory homeCategoryList = HomeCategory();
   final String? name = jsonConvert.convert<String>(json['name']);
   if (name != null) {
     homeCategoryList.name = name;
@@ -92,15 +92,15 @@ HomeCategoryList $HomeCategoryListFromJson(Map<String, dynamic> json) {
   return homeCategoryList;
 }
 
-Map<String, dynamic> $HomeCategoryListToJson(HomeCategoryList entity) {
+Map<String, dynamic> $HomeCategoryListToJson(HomeCategory entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['name'] = entity.name;
   data['count'] = entity.count;
   return data;
 }
 
-HomeVideoList $HomeVideoListFromJson(Map<String, dynamic> json) {
-  final HomeVideoList homeVideoList = HomeVideoList();
+HomeVideo $HomeVideoListFromJson(Map<String, dynamic> json) {
+  final HomeVideo homeVideoList = HomeVideo();
   final String? id = jsonConvert.convert<String>(json['id']);
   if (id != null) {
     homeVideoList.id = id;
@@ -177,7 +177,7 @@ HomeVideoList $HomeVideoListFromJson(Map<String, dynamic> json) {
   return homeVideoList;
 }
 
-Map<String, dynamic> $HomeVideoListToJson(HomeVideoList entity) {
+Map<String, dynamic> $HomeVideoListToJson(HomeVideo entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
   data['vid'] = entity.vid;

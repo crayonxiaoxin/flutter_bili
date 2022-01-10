@@ -80,14 +80,14 @@ class JsonConvert {
     if (type == (HomeEntity).toString()) {
       return HomeEntity.fromJson(json) as M;
     }
-    if (type == (HomeBannerList).toString()) {
-      return HomeBannerList.fromJson(json) as M;
+    if (type == (HomeBanner).toString()) {
+      return HomeBanner.fromJson(json) as M;
     }
-    if (type == (HomeCategoryList).toString()) {
-      return HomeCategoryList.fromJson(json) as M;
+    if (type == (HomeCategory).toString()) {
+      return HomeCategory.fromJson(json) as M;
     }
-    if (type == (HomeVideoList).toString()) {
-      return HomeVideoList.fromJson(json) as M;
+    if (type == (HomeVideo).toString()) {
+      return HomeVideo.fromJson(json) as M;
     }
     if (type == (HomeVideoListOwner).toString()) {
       return HomeVideoListOwner.fromJson(json) as M;
@@ -109,19 +109,15 @@ class JsonConvert {
     if (<HomeEntity>[] is M) {
       return data.map<HomeEntity>((e) => HomeEntity.fromJson(e)).toList() as M;
     }
-    if (<HomeBannerList>[] is M) {
-      return data
-          .map<HomeBannerList>((e) => HomeBannerList.fromJson(e))
-          .toList() as M;
+    if (<HomeBanner>[] is M) {
+      return data.map<HomeBanner>((e) => HomeBanner.fromJson(e)).toList() as M;
     }
-    if (<HomeCategoryList>[] is M) {
-      return data
-          .map<HomeCategoryList>((e) => HomeCategoryList.fromJson(e))
-          .toList() as M;
-    }
-    if (<HomeVideoList>[] is M) {
-      return data.map<HomeVideoList>((e) => HomeVideoList.fromJson(e)).toList()
+    if (<HomeCategory>[] is M) {
+      return data.map<HomeCategory>((e) => HomeCategory.fromJson(e)).toList()
           as M;
+    }
+    if (<HomeVideo>[] is M) {
+      return data.map<HomeVideo>((e) => HomeVideo.fromJson(e)).toList() as M;
     }
     if (<HomeVideoListOwner>[] is M) {
       return data
