@@ -8,7 +8,7 @@ class HomeRequest extends BaseRequest {
 
   @override
   bool needLogin() {
-    return false;
+    return true;
   }
 
   @override

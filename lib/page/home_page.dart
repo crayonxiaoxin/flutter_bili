@@ -95,10 +95,12 @@ class _HomePageState extends State<HomePage>
   void loadData() async {
     try {
       HomeEntity result = await HomeDao.get("推荐");
-      print("loadData():$result");
+      print(result);
       if (result.categoryList != null) {
-        categoryList = result.categoryList!;
-        _controller = TabController(length: categoryList.length, vsync: this);
+        setState(() {
+          categoryList = result.categoryList!;
+          _controller = TabController(length: categoryList.length, vsync: this);
+        });
       }
     } on NeedLogin catch (e) {
       HiNavigator.getInstance().onJumpTo(RouteStatus.login);

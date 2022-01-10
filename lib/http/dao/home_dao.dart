@@ -1,5 +1,5 @@
 import 'package:flutter_bili/http/core/hi_net.dart';
-import 'package:flutter_bili/http/request/HomeRequest.dart';
+import 'package:flutter_bili/http/request/home_request.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 
 class HomeDao {
@@ -9,7 +9,7 @@ class HomeDao {
     request.pathParams = categoryName;
     request.addParam("pageIndex", pageIndex).addParam("pageSize", pageSize);
     var result = await HiNet.getInstance().fire(request);
-    print(result);
+    print("aa  $result");
     return HomeEntity.fromJson(result['data']);
   }
 }
