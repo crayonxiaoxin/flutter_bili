@@ -24,7 +24,16 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    pages = [HomePage(), RankingPage(), FavoritePage(), ProfilePage()];
+    pages = [
+      HomePage(
+        onJumpTo: (index) {
+          _onJumpTo(index, pageChange: false);
+        },
+      ),
+      RankingPage(),
+      FavoritePage(),
+      ProfilePage()
+    ];
     if (!hasBuild) {
       // 页面第一次打开时，通知打开的是哪个 tab
       HiNavigator.getInstance()
@@ -34,7 +43,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     return Scaffold(
       body: PageView(
         controller: _controller,
-        children: [HomePage(), RankingPage(), FavoritePage(), ProfilePage()],
+        children: [...pages],
         onPageChanged: (index) => _onJumpTo(index, pageChange: true),
         physics: NeverScrollableScrollPhysics(), // 禁止滑动翻页
       ),

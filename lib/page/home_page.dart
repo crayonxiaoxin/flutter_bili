@@ -7,9 +7,12 @@ import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/page/home_tab_page.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:flutter_bili/widget/navigation_bar.dart' as NB;
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final ValueChanged<int>? onJumpTo;
+
+  const HomePage({Key? key, this.onJumpTo}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -53,7 +56,16 @@ class _HomePageState extends HiState<HomePage>
     return Scaffold(
       body: Column(
         children: [
-          _tabBar(),
+          NB.NavigationBar(
+            height: 50,
+            child: _appBar(),
+            color: Colors.white,
+            statusStyle: NB.StatusStyle.DARK_CONTENT,
+          ),
+          Container(
+            color: Colors.white,
+            child: _tabBar(),
+          ),
           Flexible(
               child: TabBarView(
                   controller: _controller,
@@ -115,5 +127,57 @@ class _HomePageState extends HiState<HomePage>
     } on HiNetError catch (e) {
       showWarnToast(e.message);
     }
+  }
+
+  _appBar() {
+    return Padding(
+      padding: EdgeInsets.only(left: 15, right: 15),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(23),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(23),
+              onTap: () {
+                widget.onJumpTo?.call(3);
+              },
+              child: Image(
+                height: 46,
+                width: 46,
+                image: AssetImage("assets/images/avatar.png"),
+              ),
+            ),
+          ),
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                padding: EdgeInsets.only(left: 10),
+                height: 32,
+                alignment: Alignment.centerLeft,
+                child: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
+                decoration: BoxDecoration(color: Colors.grey[100]),
+              ),
+            ),
+          )),
+          Icon(
+            Icons.explore_outlined,
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 12),
+            child: Icon(
+              Icons.mail_outline,
+              color: Colors.grey,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

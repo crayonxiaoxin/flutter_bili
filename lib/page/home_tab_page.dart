@@ -18,6 +18,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
+        padding: EdgeInsets.only(top: 12),
         children: [if (widget.bannerList != null) _banner()],
       ),
     );
@@ -28,6 +29,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
       padding: EdgeInsets.only(left: 18, right: 18),
       child: HiBanner(
         widget.bannerList,
+        bannerHeight: 150,
       ),
     );
   }
