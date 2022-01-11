@@ -71,8 +71,8 @@ class _HomePageState extends HiState<HomePage>
                   controller: _controller,
                   children: categoryList.map((tab) {
                     return HomeTabPage(
-                      name: tab.name ?? "",
-                      bannerList: bannerList,
+                      categoryName: tab.name ?? "",
+                      bannerList: tab.name == "推荐" ? bannerList : null,
                     );
                   }).toList()))
         ],
