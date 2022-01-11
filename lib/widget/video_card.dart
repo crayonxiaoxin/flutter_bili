@@ -14,8 +14,8 @@ class VideoCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         print(videoMo?.url ?? "");
-        HiNavigator.getInstance().onJumpTo(RouteStatus.detail,
-            args: {"videoMo": HomeVideo.instance(vid: videoMo?.vid)});
+        HiNavigator.getInstance()
+            .onJumpTo(RouteStatus.detail, args: {"videoMo": videoMo});
       },
       child: SizedBox(
         height: 220,
