@@ -7,6 +7,7 @@ import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/page/home_tab_page.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:flutter_bili/widget/loading_container.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart' as NB;
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _HomePageState extends HiState<HomePage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   var listener;
   TabController? _controller;
+  bool _isLoading = true;
 
   // var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "游戏", "娱乐", "音乐", "短片·手书·配音"];
   List<HomeCategory> categoryList = [];
@@ -54,28 +56,32 @@ class _HomePageState extends HiState<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Column(
-        children: [
-          NB.NavigationBar(
-            height: 50,
-            child: _appBar(),
-            color: Colors.white,
-            statusStyle: NB.StatusStyle.DARK_CONTENT,
-          ),
-          Container(
-            color: Colors.white,
-            child: _tabBar(),
-          ),
-          Flexible(
-              child: TabBarView(
-                  controller: _controller,
-                  children: categoryList.map((tab) {
-                    return HomeTabPage(
-                      categoryName: tab.name ?? "",
-                      bannerList: tab.name == "推荐" ? bannerList : null,
-                    );
-                  }).toList()))
-        ],
+      backgroundColor: Colors.white,
+      body: LoadingContainer(
+        isLoading: _isLoading,
+        child: Column(
+          children: [
+            NB.NavigationBar(
+              height: 50,
+              child: _appBar(),
+              color: Colors.white,
+              statusStyle: NB.StatusStyle.DARK_CONTENT,
+            ),
+            Container(
+              color: Colors.white,
+              child: _tabBar(),
+            ),
+            Flexible(
+                child: TabBarView(
+                    controller: _controller,
+                    children: categoryList.map((tab) {
+                      return HomeTabPage(
+                        categoryName: tab.name ?? "",
+                        bannerList: tab.name == "推荐" ? bannerList : null,
+                      );
+                    }).toList()))
+          ],
+        ),
       ),
     );
   }
@@ -117,15 +123,25 @@ class _HomePageState extends HiState<HomePage>
           categoryList = result.categoryList!;
           bannerList = result.bannerList!;
           _controller = TabController(length: categoryList.length, vsync: this);
+          _isLoading = false;
         });
       }
     } on NeedLogin catch (e) {
       HiNavigator.getInstance().onJumpTo(RouteStatus.login);
       showWarnToast(e.message);
+      setState(() {
+        _isLoading = false;
+      });
     } on NeedAuth catch (e) {
       showWarnToast(e.message);
+      setState(() {
+        _isLoading = false;
+      });
     } on HiNetError catch (e) {
       showWarnToast(e.message);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
