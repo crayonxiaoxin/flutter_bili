@@ -3,6 +3,7 @@ import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HiBanner extends StatelessWidget {
   final List<HomeBanner>? bannerList;
@@ -71,7 +72,13 @@ class HiBanner extends StatelessWidget {
           args: {'videoMo': HomeVideo.instance(vid: banner.url)});
     } else {
       print("type:${banner.type}, url:${banner.url}");
-      // todo
+      _launchUrl(banner.url);
+    }
+  }
+
+  void _launchUrl(String? url) async {
+    if (url != null) {
+      await launch(url);
     }
   }
 }
