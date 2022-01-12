@@ -15,7 +15,29 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class MaterialControls extends StatefulWidget {
-  const MaterialControls({Key? key}) : super(key: key);
+  // 初始化时 是否显示 loading
+  final bool showLoadingOnInitialize;
+
+  // 是否显示 大的 播放器按钮
+  final bool showBigPlayButton;
+
+  // 视频 浮层
+  final Widget? overlayUI;
+
+  // 底部 渐变
+  final Gradient? bottomGradient;
+
+  // 弹幕 浮层
+  final Widget? barrageUI;
+
+  const MaterialControls(
+      {Key? key,
+      this.showLoadingOnInitialize = true,
+      this.showBigPlayButton = true,
+      this.overlayUI,
+      this.bottomGradient,
+      this.barrageUI})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -34,12 +56,15 @@ class _MaterialControlsState extends State<MaterialControls>
   Timer? _showAfterExpandCollapseTimer;
   bool _dragging = false;
   bool _displayTapped = false;
+  double? _latestVolume;
 
-  final barHeight = 48.0 * 1.5;
+  // final barHeight = 48.0 * 1.5;
+  final barHeight = 48.0;
   final marginSize = 5.0;
 
   late VideoPlayerController controller;
   ChewieController? _chewieController;
+
   // We know that _chewieController is set in didChangeDependencies
   ChewieController get chewieController => _chewieController!;
 
@@ -75,9 +100,12 @@ class _MaterialControlsState extends State<MaterialControls>
           absorbing: notifier.hideStuff,
           child: Stack(
             children: [
+              // 弹幕
+              widget.barrageUI ?? Container(),
               if (_latestValue.isBuffering)
-                const Center(
-                  child: CircularProgressIndicator(),
+                Center(
+                  // child: CircularProgressIndicator(),
+                  child: _loadingIndicator(),
                 )
               else
                 _buildHitArea(),
@@ -95,6 +123,7 @@ class _MaterialControlsState extends State<MaterialControls>
                   _buildBottomBar(context),
                 ],
               ),
+              _overlayUI()
             ],
           ),
         ),
@@ -152,7 +181,7 @@ class _MaterialControlsState extends State<MaterialControls>
     final options = <OptionItem>[
       OptionItem(
         onTap: () async {
-          Navigator.pop(context);
+          // Navigator.pop(context);
           _onSpeedButtonTap();
         },
         iconData: Icons.speed,
@@ -252,6 +281,7 @@ class _MaterialControlsState extends State<MaterialControls>
     );
   }
 
+  /// 底部控制栏
   AnimatedOpacity _buildBottomBar(
     BuildContext context,
   ) {
@@ -261,36 +291,24 @@ class _MaterialControlsState extends State<MaterialControls>
       opacity: notifier.hideStuff ? 0.0 : 1.0,
       duration: const Duration(milliseconds: 300),
       child: Container(
-        height: barHeight + (chewieController.isFullScreen ? 10.0 : 0),
+        // height: barHeight + (chewieController.isFullScreen ? 10.0 : 0),
+        height: barHeight,
+        // 底部 渐变
+        decoration: BoxDecoration(gradient: widget.bottomGradient),
         padding: EdgeInsets.only(
-          left: 20,
-          bottom: !chewieController.isFullScreen ? 10.0 : 0,
+          left: 10,
+          // bottom: !chewieController.isFullScreen ? 10.0 : 0,
         ),
         child: SafeArea(
           bottom: chewieController.isFullScreen,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    if (chewieController.isLive)
-                      const Expanded(child: Text('LIVE'))
-                    else
-                      _buildPosition(iconColor),
-                    if (chewieController.allowFullScreen) _buildExpandButton(),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: chewieController.isFullScreen ? 15.0 : 0,
-              ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildPlayPause(controller),
               if (!chewieController.isLive)
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.only(right: 20),
+                    padding: const EdgeInsets.only(right: 20, left: 10),
                     child: Row(
                       children: [
                         _buildProgressBar(),
@@ -298,6 +316,14 @@ class _MaterialControlsState extends State<MaterialControls>
                     ),
                   ),
                 ),
+              if (chewieController.isLive)
+                const Expanded(child: Text('LIVE'))
+              else
+                _buildPosition(iconColor),
+              if (chewieController.allowedScreenSleep)
+                _buildSpeedButton(controller),
+              if (chewieController.allowMuting) _buildMuteButton(controller),
+              if (chewieController.allowFullScreen) _buildExpandButton(),
             ],
           ),
         ),
@@ -305,6 +331,7 @@ class _MaterialControlsState extends State<MaterialControls>
     );
   }
 
+  /// 展开按钮 - 全屏
   GestureDetector _buildExpandButton() {
     return GestureDetector(
       onTap: _onExpandCollapse,
@@ -352,14 +379,17 @@ class _MaterialControlsState extends State<MaterialControls>
           });
         }
       },
-      child: CenterPlayButton(
-        backgroundColor: Colors.black54,
-        iconColor: Colors.white,
-        isFinished: isFinished,
-        isPlaying: controller.value.isPlaying,
-        show: !_dragging && !notifier.hideStuff,
-        onPressed: _playPause,
-      ),
+      // 中间播放按钮
+      child: widget.showBigPlayButton
+          ? CenterPlayButton(
+              backgroundColor: Colors.black54,
+              iconColor: Colors.white,
+              isFinished: isFinished,
+              isPlaying: controller.value.isPlaying,
+              show: !_dragging && !notifier.hideStuff,
+              onPressed: _playPause,
+            )
+          : Container(),
     );
   }
 
@@ -385,6 +415,7 @@ class _MaterialControlsState extends State<MaterialControls>
     }
   }
 
+  /// 播放时间
   Widget _buildPosition(Color? iconColor) {
     final position = _latestValue.position;
     final duration = _latestValue.duration;
@@ -525,6 +556,7 @@ class _MaterialControlsState extends State<MaterialControls>
     });
   }
 
+  /// 进度条
   Widget _buildProgressBar() {
     return Expanded(
       child: MaterialVideoProgressBar(
@@ -552,5 +584,128 @@ class _MaterialControlsState extends State<MaterialControls>
             ),
       ),
     );
+  }
+
+  /// 暂停和播放icon
+  GestureDetector _buildPlayPause(VideoPlayerController controller) {
+    return GestureDetector(
+      onTap: _playPause,
+      child: Container(
+        height: barHeight,
+        color: Colors.transparent,
+        padding: const EdgeInsets.only(
+          left: 10.0,
+          right: 10.0,
+        ),
+        child: Icon(
+          controller.value.isPlaying
+              ? Icons.pause_rounded
+              : Icons.play_arrow_rounded,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  /// 播放速度
+  Widget _buildSpeedButton(
+    VideoPlayerController controller,
+  ) {
+    return GestureDetector(
+      onTap: () async {
+        _hideTimer?.cancel();
+
+        final chosenSpeed = await showModalBottomSheet<double>(
+          context: context,
+          isScrollControlled: true,
+          useRootNavigator: true,
+          builder: (context) => PlaybackSpeedDialog(
+            speeds: chewieController.playbackSpeeds,
+            selected: _latestValue.playbackSpeed,
+          ),
+        );
+
+        if (chosenSpeed != null) {
+          controller.setPlaybackSpeed(chosenSpeed);
+        }
+
+        if (_latestValue.isPlaying) {
+          _startHideTimer();
+        }
+      },
+      child: AnimatedOpacity(
+        opacity: notifier.hideStuff ? 0.0 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        child: ClipRect(
+          child: Container(
+            height: barHeight,
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+            ),
+            child: const Icon(
+              Icons.speed,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 是否静音
+  GestureDetector _buildMuteButton(
+    VideoPlayerController controller,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        _cancelAndRestartTimer();
+
+        if (_latestValue.volume == 0) {
+          controller.setVolume(_latestVolume ?? 0.5);
+        } else {
+          _latestVolume = controller.value.volume;
+          controller.setVolume(0.0);
+        }
+      },
+      child: AnimatedOpacity(
+        opacity: notifier.hideStuff ? 0.0 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        child: ClipRect(
+          child: Container(
+            height: barHeight,
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+            ),
+            child: Icon(
+              (_latestValue != null && _latestValue.volume > 0)
+                  ? Icons.volume_up
+                  : Icons.volume_off,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 中间进度条
+  _loadingIndicator() {
+    // 初始化时 是否显示 loading
+    return widget.showLoadingOnInitialize
+        ? CircularProgressIndicator()
+        : Container();
+  }
+
+  /// 浮层
+  _overlayUI() {
+    return widget.overlayUI != null
+        ? AnimatedOpacity(
+            opacity: notifier.hideStuff ? 0.0 : 1.0,
+            duration: Duration(microseconds: 300),
+            child: widget.overlayUI,
+          )
+        : Container();
   }
 }
