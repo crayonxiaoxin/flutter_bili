@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/model/home_entity.dart';
+import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/video_view.dart';
 
@@ -17,10 +18,21 @@ class VideoDetailPage extends StatefulWidget {
   _VideoDetailPageState createState() => _VideoDetailPageState();
 }
 
-class _VideoDetailPageState extends State<VideoDetailPage> {
+class _VideoDetailPageState extends State<VideoDetailPage>
+    with TickerProviderStateMixin {
+  List<String> tabs = ["简介", "评论 233"];
+  TabController? _controller;
+
   @override
   void initState() {
     super.initState();
+    _controller = TabController(length: tabs.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,21 +47,69 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
       ),
       body: Column(
         children: [
-          _videoView(),
-          Text("视频详情页，vid：${widget.videoModel.vid}"),
-          Text("视频详情页，title：${widget.videoModel.title}"),
+          _buildVideoView(),
+          // Text("视频详情页，vid：${widget.videoModel.vid}"),
+          // Text("视频详情页，title：${widget.videoModel.title}"),
+          _buildTabs(),
         ],
       ),
     );
   }
 
-  _videoView() {
+  _buildVideoView() {
     var model = widget.videoModel;
     return VideoView(
       model.url ?? "",
       cover: model.cover,
       autoPlay: true,
       looping: true,
+    );
+  }
+
+  _buildTabs() {
+    // 实现阴影效果 Material
+    return Material(
+      elevation: 4,
+      shadowColor: Colors.grey[100],
+      child: Container(
+        height: 40,
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(left: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _tabsView(),
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Icon(
+                Icons.live_tv_rounded,
+                size: 20,
+                color: Colors.grey,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _tabsView() {
+    return HiTab(
+      tabs.map((tab) {
+        return Tab(
+          height: 36,
+          child: Padding(
+            padding: EdgeInsets.only(left: 5, right: 5),
+            child: Text(
+              tab,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        );
+      }).toList(),
+      controller: _controller,
+      fontSize: 16,
+      unselectedLabelColor: Colors.grey[500],
     );
   }
 }

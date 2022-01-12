@@ -7,6 +7,7 @@ import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/page/home_tab_page.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/loading_container.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 
@@ -103,6 +104,23 @@ class _HomePageState extends HiState<HomePage>
   bool get wantKeepAlive => true;
 
   _tabBar() {
+    return HiTab(
+      categoryList.map((tab) {
+        return Tab(
+          height: 36,
+          child: Padding(
+            padding: EdgeInsets.only(left: 5, right: 5),
+            child: Text(
+              tab.name ?? "",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        );
+      }).toList(),
+      controller: _controller,
+      fontSize: 16,
+      unselectedLabelColor: Colors.grey[500],
+    );
     return TabBar(
       controller: _controller,
       isScrollable: true,
