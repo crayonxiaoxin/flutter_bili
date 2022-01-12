@@ -291,16 +291,16 @@ class _MaterialControlsState extends State<MaterialControls>
       opacity: notifier.hideStuff ? 0.0 : 1.0,
       duration: const Duration(milliseconds: 300),
       child: Container(
-        // height: barHeight + (chewieController.isFullScreen ? 10.0 : 0),
-        height: barHeight,
+        height: barHeight + (chewieController.isFullScreen ? 10.0 : 0),
         // 底部 渐变
         decoration: BoxDecoration(gradient: widget.bottomGradient),
         padding: EdgeInsets.only(
           left: 10,
-          // bottom: !chewieController.isFullScreen ? 10.0 : 0,
+          bottom: !chewieController.isFullScreen ? 10.0 : 0,
         ),
         child: SafeArea(
           bottom: chewieController.isFullScreen,
+          top: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -373,7 +373,6 @@ class _MaterialControlsState extends State<MaterialControls>
           }
         } else {
           _playPause();
-
           setState(() {
             notifier.hideStuff = true;
           });
@@ -389,7 +388,15 @@ class _MaterialControlsState extends State<MaterialControls>
               show: !_dragging && !notifier.hideStuff,
               onPressed: _playPause,
             )
-          : Container(),
+          : CenterPlayButton(
+              // 这里设置 CenterPlayButton 透明，用 Container 会导致无法点击隐藏 controller
+              backgroundColor: Colors.transparent,
+              iconColor: Colors.transparent,
+              isFinished: isFinished,
+              isPlaying: controller.value.isPlaying,
+              show: !_dragging && !notifier.hideStuff,
+              onPressed: (){},
+            ),
     );
   }
 
@@ -489,6 +496,8 @@ class _MaterialControlsState extends State<MaterialControls>
     _updateState();
 
     if (controller.value.isPlaying || chewieController.autoPlay) {
+      // 是否自动播放
+      if (chewieController.autoPlay) controller.play();
       _startHideTimer();
     }
 
@@ -695,7 +704,10 @@ class _MaterialControlsState extends State<MaterialControls>
     // 初始化时 是否显示 loading
     return widget.showLoadingOnInitialize
         ? CircularProgressIndicator()
-        : Container();
+        : Container(
+            width: 0,
+            height: 0,
+          );
   }
 
   /// 浮层
@@ -706,6 +718,9 @@ class _MaterialControlsState extends State<MaterialControls>
             duration: Duration(microseconds: 300),
             child: widget.overlayUI,
           )
-        : Container();
+        : Container(
+            width: 0,
+            height: 0,
+          );
   }
 }

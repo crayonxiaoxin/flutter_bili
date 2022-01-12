@@ -8,7 +8,7 @@ import 'package:flutter_bili/page/home_tab_page.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/widget/loading_container.dart';
-import 'package:flutter_bili/widget/navigation_bar.dart' as NB;
+import 'package:flutter_bili/widget/navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   final ValueChanged<int>? onJumpTo;
@@ -20,7 +20,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends HiState<HomePage>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+    with
+        AutomaticKeepAliveClientMixin,
+        TickerProviderStateMixin,
+        WidgetsBindingObserver {
   var listener;
   TabController? _controller;
   bool _isLoading = true;
@@ -32,6 +35,8 @@ class _HomePageState extends HiState<HomePage>
   @override
   void initState() {
     super.initState();
+    // 监听生命周期
+    WidgetsBinding.instance?.addObserver(this);
     _controller = TabController(length: categoryList.length, vsync: this);
     HiNavigator.getInstance().addListener(listener = (current, pre) {
       print("home page current: ${current.page}");
@@ -47,9 +52,17 @@ class _HomePageState extends HiState<HomePage>
 
   @override
   void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
     HiNavigator.getInstance().removeListener(listener);
     _controller?.dispose();
     super.dispose();
+  }
+
+  /// 监听生命周期
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print("didChangeAppLifecycleState: $state");
   }
 
   @override
@@ -61,11 +74,11 @@ class _HomePageState extends HiState<HomePage>
         isLoading: _isLoading,
         child: Column(
           children: [
-            NB.NavigationBar(
+            NavigationAppBar(
               height: 50,
               child: _appBar(),
               color: Colors.white,
-              statusStyle: NB.StatusStyle.DARK_CONTENT,
+              statusStyle: StatusStyle.DARK_CONTENT,
             ),
             Container(
               color: Colors.white,
