@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/model/home_entity.dart';
+import 'package:flutter_bili/widget/expandable_content.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:flutter_bili/widget/video_header.dart';
 import 'package:flutter_bili/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
@@ -48,9 +50,18 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       body: Column(
         children: [
           _buildVideoView(),
-          // Text("视频详情页，vid：${widget.videoModel.vid}"),
-          // Text("视频详情页，title：${widget.videoModel.title}"),
           _buildTabs(),
+          Flexible(
+              fit: FlexFit.loose, // child 实际大小
+              child: TabBarView(
+                children: [
+                  _buildDetailList(),
+                  Container(
+                    child: Text("coming soon"),
+                  )
+                ],
+                controller: _controller,
+              ))
         ],
       ),
     );
@@ -102,7 +113,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
             padding: EdgeInsets.only(left: 5, right: 5),
             child: Text(
               tab,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 14),
             ),
           ),
         );
@@ -111,5 +122,23 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       fontSize: 16,
       unselectedLabelColor: Colors.grey[500],
     );
+  }
+
+  _buildDetailList() {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [...buildContents()],
+    );
+  }
+
+  buildContents() {
+    return [
+      Container(
+        child: VideoHeader(
+          owner: widget.videoModel.owner,
+        ),
+      ),
+      ExpandableContent(videoMo: widget.videoModel)
+    ];
   }
 }

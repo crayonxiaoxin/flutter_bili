@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/util/format_util.dart';
 
 /// 带缓存的 image
 Widget cachedImage(String? imageUrl,
@@ -32,4 +33,22 @@ blackLinearGradient({bool fromTop = false}) {
       ],
       begin: fromTop ? Alignment.topCenter : Alignment.bottomCenter,
       end: fromTop ? Alignment.bottomCenter : Alignment.topCenter);
+}
+
+smallIconText(IconData icon, var text) {
+  var style = TextStyle(fontSize: 12, color: Colors.grey);
+  if (text is int) {
+    text = countFormat(text);
+  }
+  return [
+    Icon(
+      icon,
+      color: Colors.grey,
+      size: 12,
+    ),
+    Text(
+      " $text",
+      style: style,
+    )
+  ];
 }
