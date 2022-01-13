@@ -70,3 +70,16 @@ SizedBox hiSpace({double height = 1, double width = 1}) {
     width: width,
   );
 }
+
+// 底部阴影
+BoxDecoration bottomBoxShadow() {
+  return BoxDecoration(color: Colors.white, boxShadow: [
+    BoxShadow(
+        color: Colors.grey[100]!,
+        offset: Offset(0.0, 5.0),
+        // 阴影模糊程度
+        blurRadius: 5.0,
+        // 阴影扩散程度
+        spreadRadius: 1.0)
+  ]);
+}

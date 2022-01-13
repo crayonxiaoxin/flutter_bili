@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 
@@ -35,55 +36,55 @@ class _RankingPageState extends State<RankingPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: NavigationAppBar(
+        height: 0,
+        color: Colors.white,
+        statusStyle: StatusStyle.DARK_CONTENT,
+      ),
       body: Column(
         children: [
-          NavigationAppBar(
-            height: 0,
-            color: Colors.white,
-            statusStyle: StatusStyle.DARK_CONTENT,
-          ),
           Container(
             color: Colors.white,
             child: _tabBar(),
           ),
-          // Flexible(
-          //     child: TabBarView(
-          //         controller: _controller,
-          //         children: categoryList.map((tab) {
-          //           return HomeTabPage(
-          //             categoryName: tab.name ?? "",
-          //             bannerList: tab.name == "推荐" ? bannerList : null,
-          //           );
-          //         }).toList()))
+          _buildTabView(),
         ],
       ),
     );
   }
 
   _tabBar() {
-    return Material(
-        elevation: 4,
-        shadowColor: Colors.grey[100],
-        child: Container(
-          alignment: Alignment.center,
-          color: Colors.white,
-          child: HiTab(
-            tabs.map((tab) {
-              return Tab(
-                height: 36,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 5, right: 5),
-                  child: Text(
-                    tab['name'] ?? "",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              );
-            }).toList(),
+    return Container(
+      alignment: Alignment.center,
+      decoration: bottomBoxShadow(),
+      child: HiTab(
+        tabs.map((tab) {
+          return Tab(
+            height: 36,
+            child: Padding(
+              padding: EdgeInsets.only(left: 5, right: 5),
+              child: Text(
+                tab['name'] ?? "",
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          );
+        }).toList(),
+        controller: _controller,
+        fontSize: 16,
+        unselectedLabelColor: Colors.grey[500],
+      ),
+    );
+  }
+
+  _buildTabView() {
+    return Flexible(
+        child: TabBarView(
             controller: _controller,
-            fontSize: 16,
-            unselectedLabelColor: Colors.grey[500],
-          ),
-        ));
+            children: tabs.map((tab) {
+              return Container(
+                child: Text(tab['name'] ?? ""),
+              );
+            }).toList()));
   }
 }

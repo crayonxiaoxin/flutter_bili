@@ -13,6 +13,7 @@ import 'package:flutter_bili/widget/expandable_content.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/video_header.dart';
+import 'package:flutter_bili/widget/video_large_card.dart';
 import 'package:flutter_bili/widget/video_tool_bar.dart';
 import 'package:flutter_bili/widget/video_view.dart';
 
@@ -34,6 +35,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   TabController? _controller;
   VideoDetailEntity? _videoDetailMo;
   HomeVideo? videoModel;
+  List<HomeVideo> videoList = [];
 
   @override
   void initState() {
@@ -66,12 +68,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
           Flexible(
               fit: FlexFit.loose, // child 实际大小
               child: TabBarView(
-                children: [
-                  _buildDetailList(),
-                  Container(
-                    child: Text("coming soon"),
-                  )
-                ],
+                children: [_buildDetailList(), Text("Coming soon")],
                 controller: _controller,
               ))
         ],
@@ -139,7 +136,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   _buildDetailList() {
     return ListView(
       padding: EdgeInsets.zero,
-      children: [...buildContents()],
+      children: [...buildContents(), ..._buildVideoList()],
     );
   }
 
@@ -160,10 +157,6 @@ class _VideoDetailPageState extends State<VideoDetailPage>
         onFavorite: _onFavorite,
         onShare: _onShare,
       ),
-      Container(
-        height: 600,
-        color: Colors.blue,
-      )
     ];
   }
 
@@ -175,6 +168,7 @@ class _VideoDetailPageState extends State<VideoDetailPage>
       setState(() {
         _videoDetailMo = result;
         videoModel = result.videoInfo;
+        videoList = result.videoList ?? [];
       });
     } on NeedLogin catch (e) {
       HiNavigator.getInstance().onJumpTo(RouteStatus.login);
@@ -251,4 +245,10 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   void _onShare() {}
+
+  _buildVideoList() {
+    return videoList.map((e) {
+      return VideoLargeCard(videoModel: e);
+    }).toList();
+  }
 }
