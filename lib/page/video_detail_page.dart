@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/favorite_dao.dart';
 import 'package:flutter_bili/http/dao/like_dao.dart';
@@ -29,7 +30,7 @@ class VideoDetailPage extends StatefulWidget {
   _VideoDetailPageState createState() => _VideoDetailPageState();
 }
 
-class _VideoDetailPageState extends State<VideoDetailPage>
+class _VideoDetailPageState extends HiState<VideoDetailPage>
     with TickerProviderStateMixin {
   List<String> tabs = ["简介", "评论 233"];
   TabController? _controller;

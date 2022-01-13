@@ -3,7 +3,7 @@ import 'package:flutter_bili/http/request/home_request.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 
 class HomeDao {
-  static get(String categoryName,
+  static Future<HomeEntity> get(String categoryName,
       {int pageIndex = 1, int pageSize = 10}) async {
     var request = HomeRequest();
     request.pathParams = categoryName;

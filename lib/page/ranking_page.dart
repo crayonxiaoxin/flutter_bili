@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/page/ranking_tab_page.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
@@ -83,7 +84,9 @@ class _RankingPageState extends State<RankingPage>
             controller: _controller,
             children: tabs.map((tab) {
               return Container(
-                child: Text(tab['name'] ?? ""),
+                child: RankingTabPage(
+                  sort: tab['key']!,
+                ),
               );
             }).toList()));
   }
