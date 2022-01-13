@@ -35,6 +35,7 @@ blackLinearGradient({bool fromTop = false}) {
       end: fromTop ? Alignment.bottomCenter : Alignment.topCenter);
 }
 
+/// 文字 icon 组合
 smallIconText(IconData icon, var text) {
   var style = TextStyle(fontSize: 12, color: Colors.grey);
   if (text is int) {
@@ -51,4 +52,21 @@ smallIconText(IconData icon, var text) {
       style: style,
     )
   ];
+}
+
+/// border
+borderLine({bottom: true, top: false}) {
+  var borderSide = BorderSide(color: Colors.grey[200]!, width: 0.5);
+  return Border(
+    top: top ? borderSide : BorderSide.none,
+    bottom: bottom ? borderSide : BorderSide.none,
+  );
+}
+
+/// 间距
+SizedBox hiSpace({double height = 1, double width = 1}) {
+  return SizedBox(
+    height: height,
+    width: width,
+  );
 }

@@ -1,11 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/http/core/hi_error.dart';
+import 'package:flutter_bili/http/dao/favorite_dao.dart';
+import 'package:flutter_bili/http/dao/like_dao.dart';
+import 'package:flutter_bili/http/dao/video_detail_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
+import 'package:flutter_bili/model/video_detail_entity.dart';
+import 'package:flutter_bili/navigator/hi_navigator.dart';
+import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/widget/expandable_content.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/video_header.dart';
+import 'package:flutter_bili/widget/video_tool_bar.dart';
 import 'package:flutter_bili/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget {
@@ -24,11 +32,15 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     with TickerProviderStateMixin {
   List<String> tabs = ["简介", "评论 233"];
   TabController? _controller;
+  VideoDetailEntity? _videoDetailMo;
+  HomeVideo? videoModel;
 
   @override
   void initState() {
     super.initState();
     _controller = TabController(length: tabs.length, vsync: this);
+    videoModel = widget.videoModel;
+    _loadData();
   }
 
   @override
@@ -68,10 +80,10 @@ class _VideoDetailPageState extends State<VideoDetailPage>
   }
 
   _buildVideoView() {
-    var model = widget.videoModel;
+    var model = videoModel;
     return VideoView(
-      model.url ?? "",
-      cover: model.cover,
+      model?.url ?? "",
+      cover: model?.cover,
       autoPlay: true,
       looping: true,
     );
@@ -135,10 +147,108 @@ class _VideoDetailPageState extends State<VideoDetailPage>
     return [
       Container(
         child: VideoHeader(
-          owner: widget.videoModel.owner,
+          owner: videoModel?.owner,
         ),
       ),
-      ExpandableContent(videoMo: widget.videoModel)
+      ExpandableContent(videoMo: videoModel),
+      VideoToolBar(
+        detailMo: _videoDetailMo,
+        videoModel: videoModel,
+        onLike: _onLike,
+        onUnLike: _onUnLike,
+        onCoin: _onCoin,
+        onFavorite: _onFavorite,
+        onShare: _onShare,
+      ),
+      Container(
+        height: 600,
+        color: Colors.blue,
+      )
     ];
   }
+
+  void _loadData() async {
+    try {
+      VideoDetailEntity result =
+          await VideoDetailDao.get(videoModel?.vid ?? "");
+      print(result);
+      setState(() {
+        _videoDetailMo = result;
+        videoModel = result.videoInfo;
+      });
+    } on NeedLogin catch (e) {
+      HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      showWarnToast(e.message);
+    } on NeedAuth catch (e) {
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      showWarnToast(e.message);
+    }
+  }
+
+  void _onLike() async {
+    try {
+      var isLike = !(_videoDetailMo?.isLike ?? false);
+      var result = await LikeDao.like(videoModel?.vid ?? "", isLike);
+      print(result);
+      _videoDetailMo?.isLike = isLike;
+      if (isLike) {
+        if (videoModel?.like != null) {
+          videoModel!.like = videoModel!.like! + 1;
+        }
+      } else {
+        if (videoModel?.like != null) {
+          videoModel!.like = videoModel!.like! - 1;
+        }
+      }
+      setState(() {
+        _videoDetailMo = _videoDetailMo;
+        videoModel = videoModel;
+      });
+      showToast(result['msg']);
+    } on NeedLogin catch (e) {
+      HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      showWarnToast(e.message);
+    } on NeedAuth catch (e) {
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      showWarnToast(e.message);
+    }
+  }
+
+  void _onUnLike() {}
+
+  void _onCoin() {}
+
+  void _onFavorite() async {
+    try {
+      var favorite = !(_videoDetailMo?.isFavorite ?? false);
+      var result = await FavoriteDao.favorite(videoModel?.vid ?? "", favorite);
+      print(result);
+      _videoDetailMo?.isFavorite = favorite;
+      if (favorite) {
+        if (videoModel?.favorite != null) {
+          videoModel!.favorite = videoModel!.favorite! + 1;
+        }
+      } else {
+        if (videoModel?.favorite != null) {
+          videoModel!.favorite = videoModel!.favorite! - 1;
+        }
+      }
+      setState(() {
+        _videoDetailMo = _videoDetailMo;
+        videoModel = videoModel;
+      });
+      showToast(result['msg']);
+    } on NeedLogin catch (e) {
+      HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      showWarnToast(e.message);
+    } on NeedAuth catch (e) {
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      showWarnToast(e.message);
+    }
+  }
+
+  void _onShare() {}
 }

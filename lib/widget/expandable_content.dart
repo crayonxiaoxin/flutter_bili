@@ -50,10 +50,6 @@ class _ExpandableContentState extends State<ExpandableContent>
           _buildInfo(),
           _buildDesc(),
           Padding(padding: EdgeInsets.only(bottom: 8)),
-          Container(
-            height: 600,
-            color: Colors.blue,
-          )
         ],
       ),
     );

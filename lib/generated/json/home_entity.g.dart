@@ -29,44 +29,44 @@ Map<String, dynamic> $HomeEntityToJson(HomeEntity entity) {
   return data;
 }
 
-HomeBanner $HomeBannerListFromJson(Map<String, dynamic> json) {
-  final HomeBanner homeBannerList = HomeBanner();
+HomeBanner $HomeBannerFromJson(Map<String, dynamic> json) {
+  final HomeBanner homeBanner = HomeBanner();
   final String? id = jsonConvert.convert<String>(json['id']);
   if (id != null) {
-    homeBannerList.id = id;
+    homeBanner.id = id;
   }
   final int? sticky = jsonConvert.convert<int>(json['sticky']);
   if (sticky != null) {
-    homeBannerList.sticky = sticky;
+    homeBanner.sticky = sticky;
   }
   final String? type = jsonConvert.convert<String>(json['type']);
   if (type != null) {
-    homeBannerList.type = type;
+    homeBanner.type = type;
   }
   final String? title = jsonConvert.convert<String>(json['title']);
   if (title != null) {
-    homeBannerList.title = title;
+    homeBanner.title = title;
   }
   final String? subtitle = jsonConvert.convert<String>(json['subtitle']);
   if (subtitle != null) {
-    homeBannerList.subtitle = subtitle;
+    homeBanner.subtitle = subtitle;
   }
   final String? url = jsonConvert.convert<String>(json['url']);
   if (url != null) {
-    homeBannerList.url = url;
+    homeBanner.url = url;
   }
   final String? cover = jsonConvert.convert<String>(json['cover']);
   if (cover != null) {
-    homeBannerList.cover = cover;
+    homeBanner.cover = cover;
   }
   final String? createTime = jsonConvert.convert<String>(json['createTime']);
   if (createTime != null) {
-    homeBannerList.createTime = createTime;
+    homeBanner.createTime = createTime;
   }
-  return homeBannerList;
+  return homeBanner;
 }
 
-Map<String, dynamic> $HomeBannerListToJson(HomeBanner entity) {
+Map<String, dynamic> $HomeBannerToJson(HomeBanner entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
   data['sticky'] = entity.sticky;
@@ -79,105 +79,105 @@ Map<String, dynamic> $HomeBannerListToJson(HomeBanner entity) {
   return data;
 }
 
-HomeCategory $HomeCategoryListFromJson(Map<String, dynamic> json) {
-  final HomeCategory homeCategoryList = HomeCategory();
+HomeCategory $HomeCategoryFromJson(Map<String, dynamic> json) {
+  final HomeCategory homeCategory = HomeCategory();
   final String? name = jsonConvert.convert<String>(json['name']);
   if (name != null) {
-    homeCategoryList.name = name;
+    homeCategory.name = name;
   }
   final int? count = jsonConvert.convert<int>(json['count']);
   if (count != null) {
-    homeCategoryList.count = count;
+    homeCategory.count = count;
   }
-  return homeCategoryList;
+  return homeCategory;
 }
 
-Map<String, dynamic> $HomeCategoryListToJson(HomeCategory entity) {
+Map<String, dynamic> $HomeCategoryToJson(HomeCategory entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['name'] = entity.name;
   data['count'] = entity.count;
   return data;
 }
 
-HomeVideo $HomeVideoListFromJson(Map<String, dynamic> json) {
-  final HomeVideo homeVideoList = HomeVideo();
+HomeVideo $HomeVideoFromJson(Map<String, dynamic> json) {
+  final HomeVideo homeVideo = HomeVideo();
   final String? id = jsonConvert.convert<String>(json['id']);
   if (id != null) {
-    homeVideoList.id = id;
+    homeVideo.id = id;
   }
   final String? vid = jsonConvert.convert<String>(json['vid']);
   if (vid != null) {
-    homeVideoList.vid = vid;
+    homeVideo.vid = vid;
   }
   final String? title = jsonConvert.convert<String>(json['title']);
   if (title != null) {
-    homeVideoList.title = title;
+    homeVideo.title = title;
   }
   final String? tname = jsonConvert.convert<String>(json['tname']);
   if (tname != null) {
-    homeVideoList.tname = tname;
+    homeVideo.tname = tname;
   }
   final String? url = jsonConvert.convert<String>(json['url']);
   if (url != null) {
-    homeVideoList.url = url;
+    homeVideo.url = url;
   }
   final String? cover = jsonConvert.convert<String>(json['cover']);
   if (cover != null) {
-    homeVideoList.cover = cover;
+    homeVideo.cover = cover;
   }
   final int? pubdate = jsonConvert.convert<int>(json['pubdate']);
   if (pubdate != null) {
-    homeVideoList.pubdate = pubdate;
+    homeVideo.pubdate = pubdate;
   }
   final String? desc = jsonConvert.convert<String>(json['desc']);
   if (desc != null) {
-    homeVideoList.desc = desc;
+    homeVideo.desc = desc;
   }
   final int? view = jsonConvert.convert<int>(json['view']);
   if (view != null) {
-    homeVideoList.view = view;
+    homeVideo.view = view;
   }
   final int? duration = jsonConvert.convert<int>(json['duration']);
   if (duration != null) {
-    homeVideoList.duration = duration;
+    homeVideo.duration = duration;
   }
   final HomeVideoListOwner? owner =
       jsonConvert.convert<HomeVideoListOwner>(json['owner']);
   if (owner != null) {
-    homeVideoList.owner = owner;
+    homeVideo.owner = owner;
   }
   final int? reply = jsonConvert.convert<int>(json['reply']);
   if (reply != null) {
-    homeVideoList.reply = reply;
+    homeVideo.reply = reply;
   }
   final int? favorite = jsonConvert.convert<int>(json['favorite']);
   if (favorite != null) {
-    homeVideoList.favorite = favorite;
+    homeVideo.favorite = favorite;
   }
   final int? like = jsonConvert.convert<int>(json['like']);
   if (like != null) {
-    homeVideoList.like = like;
+    homeVideo.like = like;
   }
   final int? coin = jsonConvert.convert<int>(json['coin']);
   if (coin != null) {
-    homeVideoList.coin = coin;
+    homeVideo.coin = coin;
   }
   final int? share = jsonConvert.convert<int>(json['share']);
   if (share != null) {
-    homeVideoList.share = share;
+    homeVideo.share = share;
   }
   final String? createTime = jsonConvert.convert<String>(json['createTime']);
   if (createTime != null) {
-    homeVideoList.createTime = createTime;
+    homeVideo.createTime = createTime;
   }
   final int? size = jsonConvert.convert<int>(json['size']);
   if (size != null) {
-    homeVideoList.size = size;
+    homeVideo.size = size;
   }
-  return homeVideoList;
+  return homeVideo;
 }
 
-Map<String, dynamic> $HomeVideoListToJson(HomeVideo entity) {
+Map<String, dynamic> $HomeVideoToJson(HomeVideo entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['id'] = entity.id;
   data['vid'] = entity.vid;

@@ -36,9 +36,9 @@ class HomeBanner {
   HomeBanner();
 
   factory HomeBanner.fromJson(Map<String, dynamic> json) =>
-      $HomeBannerListFromJson(json);
+      $HomeBannerFromJson(json);
 
-  Map<String, dynamic> toJson() => $HomeBannerListToJson(this);
+  Map<String, dynamic> toJson() => $HomeBannerToJson(this);
 
   @override
   String toString() {
@@ -54,9 +54,9 @@ class HomeCategory {
   HomeCategory();
 
   factory HomeCategory.fromJson(Map<String, dynamic> json) =>
-      $HomeCategoryListFromJson(json);
+      $HomeCategoryFromJson(json);
 
-  Map<String, dynamic> toJson() => $HomeCategoryListToJson(this);
+  Map<String, dynamic> toJson() => $HomeCategoryToJson(this);
 
   @override
   String toString() {
@@ -108,9 +108,9 @@ class HomeVideo {
       this.size});
 
   factory HomeVideo.fromJson(Map<String, dynamic> json) =>
-      $HomeVideoListFromJson(json);
+      $HomeVideoFromJson(json);
 
-  Map<String, dynamic> toJson() => $HomeVideoListToJson(this);
+  Map<String, dynamic> toJson() => $HomeVideoToJson(this);
 
   @override
   String toString() {
