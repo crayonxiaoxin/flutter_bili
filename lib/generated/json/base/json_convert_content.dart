@@ -6,6 +6,7 @@
 import 'package:flutter_bili/model/favorite_entity.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/model/notice_entity.dart';
+import 'package:flutter_bili/model/profile_entity.dart';
 import 'package:flutter_bili/model/ranking_entity.dart';
 import 'package:flutter_bili/model/test_entity.dart';
 import 'package:flutter_bili/model/video_detail_entity.dart';
@@ -102,6 +103,15 @@ class JsonConvert {
     if (type == (NoticeEntity).toString()) {
       return NoticeEntity.fromJson(json) as M;
     }
+    if (type == (ProfileEntity).toString()) {
+      return ProfileEntity.fromJson(json) as M;
+    }
+    if (type == (ProfileCourse).toString()) {
+      return ProfileCourse.fromJson(json) as M;
+    }
+    if (type == (ProfileBenefit).toString()) {
+      return ProfileBenefit.fromJson(json) as M;
+    }
     if (type == (RankingEntity).toString()) {
       return RankingEntity.fromJson(json) as M;
     }
@@ -148,6 +158,19 @@ class JsonConvert {
     if (<NoticeEntity>[] is M) {
       return data.map<NoticeEntity>((e) => NoticeEntity.fromJson(e)).toList()
           as M;
+    }
+    if (<ProfileEntity>[] is M) {
+      return data.map<ProfileEntity>((e) => ProfileEntity.fromJson(e)).toList()
+          as M;
+    }
+    if (<ProfileCourse>[] is M) {
+      return data.map<ProfileCourse>((e) => ProfileCourse.fromJson(e)).toList()
+          as M;
+    }
+    if (<ProfileBenefit>[] is M) {
+      return data
+          .map<ProfileBenefit>((e) => ProfileBenefit.fromJson(e))
+          .toList() as M;
     }
     if (<RankingEntity>[] is M) {
       return data.map<RankingEntity>((e) => RankingEntity.fromJson(e)).toList()

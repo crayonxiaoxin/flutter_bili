@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/core/hi_state.dart';
+import 'package:flutter_bili/http/core/hi_error.dart';
+import 'package:flutter_bili/http/dao/profile_dao.dart';
+import 'package:flutter_bili/model/profile_entity.dart';
+import 'package:flutter_bili/navigator/hi_navigator.dart';
+import 'package:flutter_bili/util/toast.dart';
+import 'package:flutter_bili/util/view_util.dart';
+import 'package:flutter_bili/widget/benefit_card.dart';
+import 'package:flutter_bili/widget/course_card.dart';
+import 'package:flutter_bili/widget/hi_banner.dart';
+import 'package:flutter_bili/widget/hi_blur.dart';
+import 'package:flutter_bili/widget/hi_flexible_header.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -8,18 +20,156 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends HiState<ProfilePage>
+    with AutomaticKeepAliveClientMixin {
+  static double expandedHeight = 180; // 可收缩区域的高度
+
+  ProfileEntity? _profileMo;
+  ScrollController? _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _loadData();
+  }
+
+  @override
+  void dispose() {
+    _scrollController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: NavigationAppBar(
-        child: Text("123"),
+        height: 0,
       ),
-      body: Container(
-        child: Center(
-          child: Text("我的"),
+      body: NestedScrollView(
+        controller: _scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[_buildSliverAppBar()];
+        },
+        body: ListView(
+          padding: EdgeInsets.only(top: 10),
+          children: [..._buildContentList()],
         ),
       ),
+    );
+  }
+
+  _buildSliverAppBar() {
+    return SliverAppBar(
+      expandedHeight: expandedHeight,
+      elevation: 2,
+      backgroundColor: Colors.white,
+      shadowColor: Color(0x49eeeeee),
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        titlePadding: EdgeInsets.only(left: 0, bottom: 0),
+        title: _buildHead(),
+        background: Stack(
+          children: [
+            Positioned.fill(child: cachedImage(_profileMo?.face)),
+            Positioned.fill(
+                child: HiBlur(
+              sigma: 20,
+            )),
+            Positioned(
+              child: _buildProfileTab(),
+              left: 0,
+              right: 0,
+              bottom: 0,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _loadData() async {
+    try {
+      ProfileEntity result = await ProfileDao.get();
+      print(result);
+      setState(() {
+        _profileMo = result;
+      });
+    } on NeedLogin catch (e) {
+      HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      showWarnToast(e.message);
+    } on NeedAuth catch (e) {
+      showWarnToast(e.message);
+    } on HiNetError catch (e) {
+      showWarnToast(e.message);
+    }
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+  _buildHead() {
+    if (_profileMo == null) return Container();
+    return HiFlexibleHeader(
+      name: _profileMo?.name,
+      face: _profileMo?.face,
+      controller: _scrollController,
+      expandedHeight: expandedHeight,
+      initialOffset: 40,
+    );
+  }
+
+  _buildContentList() {
+    if (_profileMo == null) return [];
+    return [
+      _buildBanner(),
+      CourseCard(
+        courseList: _profileMo?.courseList,
+      ),
+      BenefitCard(
+        benefitList: _profileMo?.benefitList,
+      ),
+    ];
+  }
+
+  _buildBanner() {
+    return HiBanner(
+      _profileMo?.bannerList,
+      bannerHeight: 140,
+      padding: EdgeInsets.only(left: 10, right: 10),
+    );
+  }
+
+  _buildProfileTab() {
+    if (_profileMo == null) return Container();
+    return Container(
+      padding: EdgeInsets.only(top: 5, bottom: 5),
+      decoration: BoxDecoration(color: Colors.white54),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildIconText("收藏", _profileMo?.favorite),
+          _buildIconText("点赞", _profileMo?.like),
+          _buildIconText("浏览", _profileMo?.browsing),
+          _buildIconText("金币", _profileMo?.coin),
+          _buildIconText("粉丝", _profileMo?.fans)
+        ],
+      ),
+    );
+  }
+
+  _buildIconText(String? title, int? count) {
+    return Column(
+      children: [
+        Text(
+          "$count",
+          style: TextStyle(fontSize: 15, color: Colors.black87),
+        ),
+        Text("$title",
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]!)),
+      ],
     );
   }
 }
