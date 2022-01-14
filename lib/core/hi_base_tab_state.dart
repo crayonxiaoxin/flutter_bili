@@ -39,10 +39,14 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
     super.dispose();
   }
 
+  get extendBodyBehindAppBar => false;
+
+  PreferredSizeWidget? get appBar => null;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
+    var child = RefreshIndicator(
       onRefresh: loadData,
       color: primary,
       child: MediaQuery.removePadding(
@@ -51,6 +55,22 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
         child: contentChild,
       ),
     );
+    return appBar != null
+        ? Scaffold(
+            extendBodyBehindAppBar: extendBodyBehindAppBar,
+            appBar: appBar,
+            body: child,
+          )
+        : child;
+    // return RefreshIndicator(
+    //   onRefresh: loadData,
+    //   color: primary,
+    //   child: MediaQuery.removePadding(
+    //     removeTop: true,
+    //     context: context,
+    //     child: contentChild,
+    //   ),
+    // );
   }
 
   Future<M> getData(int pageIndex);

@@ -79,12 +79,14 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
 
   _buildVideoView() {
     var model = videoModel;
-    return VideoView(
-      model?.url ?? "",
-      cover: model?.cover,
-      autoPlay: true,
-      looping: true,
-    );
+    return model?.url != null
+        ? VideoView(
+            model?.url ?? "",
+            cover: model?.cover,
+            autoPlay: true,
+            looping: true,
+          )
+        : Container();
   }
 
   _buildTabs() {

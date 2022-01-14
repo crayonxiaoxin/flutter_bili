@@ -3,6 +3,7 @@ import 'package:flutter_bili/http/dao/login_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/bottom_navigator.dart';
 import 'package:flutter_bili/page/login_page.dart';
+import 'package:flutter_bili/page/notice_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
 import 'package:flutter_bili/page/video_detail_page.dart';
 import 'package:flutter_bili/util/color.dart';
@@ -216,6 +217,8 @@ class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
       page = pageWrap(LoginPage());
     } else if (routeStatus == RouteStatus.registration) {
       page = pageWrap(RegistrationPage());
+    } else if (routeStatus == RouteStatus.notice) {
+      page = pageWrap(NoticePage());
     }
     if (page != null) {
       tmpPages = [...tmpPages, page]; // 添加当前页面
@@ -262,9 +265,11 @@ class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
   RouteStatus get routeStatus {
     if (_routeStatus != RouteStatus.registration && !hasLogin) {
       return _routeStatus = RouteStatus.login;
-    } else if (videoModel != null) {
-      return _routeStatus = RouteStatus.detail;
-    } else {
+    }
+    // else if (videoModel != null) {
+    //   return _routeStatus = RouteStatus.detail;
+    // }
+    else {
       return _routeStatus;
     }
   }
