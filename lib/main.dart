@@ -38,6 +38,7 @@ class _BiliAppState extends State<BiliApp> {
                     child: CircularProgressIndicator(), // 显示 loading
                   ),
                 );
+          // return MultiProvider(providers: topProviders,child: Consumer(builder: ,),);
           return MaterialApp(
             home: widget,
             debugShowCheckedModeBanner: false,
