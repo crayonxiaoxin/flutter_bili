@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/util/adapt.dart';
@@ -7,7 +5,6 @@ import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:video_player/video_player.dart';
 
-import 'app_bar.dart';
 import 'hi_video_controllers.dart';
 
 /// 播放器组件
@@ -17,13 +14,17 @@ class VideoView extends StatefulWidget {
   final bool autoPlay;
   final bool looping;
   final double aspectRatio;
+  final Widget? overlayUI;
+  final Widget? barrageUI;
 
   const VideoView(this.url,
       {Key? key,
       this.cover,
       this.autoPlay = false,
       this.looping = false,
-      this.aspectRatio = 16 / 9})
+      this.aspectRatio = 16 / 9,
+      this.overlayUI,
+      this.barrageUI})
       : super(key: key);
 
   @override
@@ -69,7 +70,8 @@ class _VideoViewState extends State<VideoView> {
             showBigPlayButton: false,
             showLoadingOnInitialize: false,
             bottomGradient: blackLinearGradient(),
-            overlayUI: videoAppBar(ignoreStatusBar: Platform.isIOS),
+            overlayUI: widget.overlayUI,
+            barrageUI: widget.barrageUI,
           ));
     }
   }

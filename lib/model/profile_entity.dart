@@ -40,9 +40,9 @@ class ProfileCourse {
   ProfileCourse();
 
   factory ProfileCourse.fromJson(Map<String, dynamic> json) =>
-      $ProfileCourseListFromJson(json);
+      $ProfileCourseFromJson(json);
 
-  Map<String, dynamic> toJson() => $ProfileCourseListToJson(this);
+  Map<String, dynamic> toJson() => $ProfileCourseToJson(this);
 
   @override
   String toString() {
@@ -58,9 +58,9 @@ class ProfileBenefit {
   ProfileBenefit();
 
   factory ProfileBenefit.fromJson(Map<String, dynamic> json) =>
-      $ProfileBenefitListFromJson(json);
+      $ProfileBenefitFromJson(json);
 
-  Map<String, dynamic> toJson() => $ProfileBenefitListToJson(this);
+  Map<String, dynamic> toJson() => $ProfileBenefitToJson(this);
 
   @override
   String toString() {

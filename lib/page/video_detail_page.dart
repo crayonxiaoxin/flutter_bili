@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bili/barrage/barrage_input.dart';
+import 'package:flutter_bili/barrage/barrage_switch.dart';
+import 'package:flutter_bili/barrage/hi_barrage.dart';
 import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/favorite_dao.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/model/video_detail_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:flutter_bili/widget/app_bar.dart';
 import 'package:flutter_bili/widget/expandable_content.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
@@ -17,6 +21,7 @@ import 'package:flutter_bili/widget/video_header.dart';
 import 'package:flutter_bili/widget/video_large_card.dart';
 import 'package:flutter_bili/widget/video_tool_bar.dart';
 import 'package:flutter_bili/widget/video_view.dart';
+import 'package:flutter_overlay/flutter_overlay.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final HomeVideo videoModel;
@@ -37,6 +42,8 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
   VideoDetailEntity? _videoDetailMo;
   HomeVideo? videoModel;
   List<HomeVideo> videoList = [];
+  var _barrageKey = GlobalKey<HiBarrageState>();
+  bool _inputShowing = false;
 
   @override
   void initState() {
@@ -85,6 +92,12 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
             cover: model?.cover,
             autoPlay: true,
             looping: true,
+            overlayUI: videoAppBar(ignoreStatusBar: Platform.isIOS),
+            barrageUI: HiBarrage(
+              key: _barrageKey,
+              vid: model?.vid ?? "",
+              autoPlay: true,
+            ),
           )
         : Container();
   }
@@ -100,17 +113,7 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
         padding: EdgeInsets.only(left: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _tabsView(),
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(
-                Icons.live_tv_rounded,
-                size: 20,
-                color: Colors.grey,
-              ),
-            )
-          ],
+          children: [_tabsView(), _buildBarrageButton()],
         ),
       ),
     );
@@ -253,5 +256,55 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
     return videoList.map((e) {
       return VideoLargeCard(videoModel: e);
     }).toList();
+  }
+
+  _buildBarrageButton() {
+    return Padding(
+      padding: EdgeInsets.only(right: 20),
+      child: BarrageSwitch(
+        initSwitch: true,
+        inputShowing: _inputShowing,
+        onShowingInput: () {
+          setState(() {
+            _inputShowing = true;
+          });
+          HiOverlay.show(context, child: BarrageInput(
+            onTabClose: () {
+              setState(() {
+                _inputShowing = false;
+              });
+            },
+          )).then((value) {
+            print("----- input: $value");
+            _barrageKey.currentState?.send(value);
+          });
+        },
+      ),
+    );
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _inputShowing = true;
+        });
+        HiOverlay.show(context, child: BarrageInput(
+          onTabClose: () {
+            setState(() {
+              _inputShowing = false;
+            });
+          },
+        )).then((value) {
+          print("----- input: $value");
+          _barrageKey.currentState?.send(value);
+        });
+      },
+      child: Padding(
+        padding: EdgeInsets.only(right: 20),
+        child: Icon(
+          Icons.live_tv_rounded,
+          size: 20,
+          color: Colors.grey,
+        ),
+      ),
+    );
   }
 }

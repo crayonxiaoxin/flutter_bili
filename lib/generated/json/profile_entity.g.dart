@@ -65,28 +65,28 @@ Map<String, dynamic> $ProfileEntityToJson(ProfileEntity entity) {
   return data;
 }
 
-ProfileCourse $ProfileCourseListFromJson(Map<String, dynamic> json) {
-  final ProfileCourse profileCourseList = ProfileCourse();
+ProfileCourse $ProfileCourseFromJson(Map<String, dynamic> json) {
+  final ProfileCourse profileCourse = ProfileCourse();
   final String? name = jsonConvert.convert<String>(json['name']);
   if (name != null) {
-    profileCourseList.name = name;
+    profileCourse.name = name;
   }
   final String? cover = jsonConvert.convert<String>(json['cover']);
   if (cover != null) {
-    profileCourseList.cover = cover;
+    profileCourse.cover = cover;
   }
   final String? url = jsonConvert.convert<String>(json['url']);
   if (url != null) {
-    profileCourseList.url = url;
+    profileCourse.url = url;
   }
   final int? group = jsonConvert.convert<int>(json['group']);
   if (group != null) {
-    profileCourseList.group = group;
+    profileCourse.group = group;
   }
-  return profileCourseList;
+  return profileCourse;
 }
 
-Map<String, dynamic> $ProfileCourseListToJson(ProfileCourse entity) {
+Map<String, dynamic> $ProfileCourseToJson(ProfileCourse entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['name'] = entity.name;
   data['cover'] = entity.cover;
@@ -95,20 +95,20 @@ Map<String, dynamic> $ProfileCourseListToJson(ProfileCourse entity) {
   return data;
 }
 
-ProfileBenefit $ProfileBenefitListFromJson(Map<String, dynamic> json) {
-  final ProfileBenefit profileBenefitList = ProfileBenefit();
+ProfileBenefit $ProfileBenefitFromJson(Map<String, dynamic> json) {
+  final ProfileBenefit profileBenefit = ProfileBenefit();
   final String? name = jsonConvert.convert<String>(json['name']);
   if (name != null) {
-    profileBenefitList.name = name;
+    profileBenefit.name = name;
   }
   final String? url = jsonConvert.convert<String>(json['url']);
   if (url != null) {
-    profileBenefitList.url = url;
+    profileBenefit.url = url;
   }
-  return profileBenefitList;
+  return profileBenefit;
 }
 
-Map<String, dynamic> $ProfileBenefitListToJson(ProfileBenefit entity) {
+Map<String, dynamic> $ProfileBenefitToJson(ProfileBenefit entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['name'] = entity.name;
   data['url'] = entity.url;

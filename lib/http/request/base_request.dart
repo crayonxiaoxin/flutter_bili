@@ -53,8 +53,8 @@ abstract class BaseRequest {
 
   // 统一header
   Map<String, String> headers = {
-    "course-flag": Const.courseFlag,
-    "auth-token": Const.authToken
+    Const.courseFlagKey: Const.courseFlag,
+    Const.authTokenKey: Const.authToken
   };
 
   /// 添加 header
