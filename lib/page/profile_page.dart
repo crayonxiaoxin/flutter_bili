@@ -4,6 +4,8 @@ import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/profile_dao.dart';
 import 'package:flutter_bili/model/profile_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
+import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/benefit_card.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/hi_blur.dart';
 import 'package:flutter_bili/widget/hi_flexible_header.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:provider/src/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -43,16 +46,19 @@ class _ProfilePageState extends HiState<ProfilePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var themeProvider = context.watch<ThemeProvider>();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: NavigationAppBar(
-        statusStyle: StatusStyle.DARK_CONTENT,
+        statusStyle: themeProvider.isDarkMode()
+            ? StatusStyle.LIGHT_CONTENT
+            : StatusStyle.DARK_CONTENT,
         height: 0,
       ),
       body: NestedScrollView(
         controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[_buildSliverAppBar()];
+          return <Widget>[_buildSliverAppBar(themeProvider)];
         },
         body: ListView(
           padding: EdgeInsets.only(top: 10),
@@ -62,11 +68,11 @@ class _ProfilePageState extends HiState<ProfilePage>
     );
   }
 
-  _buildSliverAppBar() {
+  _buildSliverAppBar(ThemeProvider themeProvider) {
     return SliverAppBar(
       expandedHeight: expandedHeight,
       elevation: 2,
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.isDarkMode()?HiColor.darkBg:Colors.white,
       shadowColor: Color(0x49eeeeee),
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(

@@ -9,6 +9,7 @@ import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/video_large_card.dart';
+import 'package:provider/src/provider.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -32,17 +33,17 @@ class _FavoritePageState
 
   @override
   PreferredSizeWidget? get appBar {
-    var themeMode = ThemeProvider().getThemeMode();
+    var themeProvider = context.watch<ThemeProvider>();
     return NavigationAppBar(
       elevation: 2,
       height: 40,
-      shadowColor: themeMode == ThemeMode.light ? Color(0x49eeeeee) : null,
-      color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
-      statusStyle: themeMode == ThemeMode.light
-          ? StatusStyle.DARK_CONTENT
-          : StatusStyle.LIGHT_CONTENT,
+      shadowColor: themeProvider.isDarkMode() ? null : Color(0x49eeeeee),
+      color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
+      statusStyle: themeProvider.isDarkMode()
+          ? StatusStyle.LIGHT_CONTENT
+          : StatusStyle.DARK_CONTENT,
       child: Container(
-        color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+        color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
         alignment: Alignment.center,
         child: Text(
           "收藏",

@@ -5,6 +5,7 @@ import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:provider/src/provider.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({Key? key}) : super(key: key);
@@ -37,20 +38,20 @@ class _RankingPageState extends State<RankingPage>
 
   @override
   Widget build(BuildContext context) {
-    var themeMode = ThemeProvider().getThemeMode();
+    var themeProvider = context.watch<ThemeProvider>();
     return Scaffold(
       appBar: NavigationAppBar(
         height: 0,
-        color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
-        statusStyle: themeMode == ThemeMode.light
-            ? StatusStyle.DARK_CONTENT
-            : StatusStyle.LIGHT_CONTENT,
+        color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
+        statusStyle: themeProvider.isDarkMode()
+            ? StatusStyle.LIGHT_CONTENT
+            : StatusStyle.DARK_CONTENT,
       ),
       body: Column(
         children: [
           Container(
             color: Colors.white,
-            child: _tabBar(themeMode),
+            child: _tabBar(themeProvider),
           ),
           _buildTabView(),
         ],
@@ -58,12 +59,12 @@ class _RankingPageState extends State<RankingPage>
     );
   }
 
-  _tabBar(ThemeMode themeMode) {
+  _tabBar(ThemeProvider themeProvider) {
     return Container(
       alignment: Alignment.center,
       decoration: bottomBoxShadow(
-          color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
-          shadowColor: themeMode == ThemeMode.light ? null : HiColor.darkBg),
+          color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
+          shadowColor: themeProvider.isDarkMode() ? HiColor.darkBg : null),
       child: HiTab(
         tabs.map((tab) {
           return Tab(

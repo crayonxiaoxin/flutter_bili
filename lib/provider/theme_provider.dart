@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bili/db/hi_cache.dart';
 import 'package:flutter_bili/util/color.dart';
 
@@ -10,8 +11,34 @@ extension ThemeModeExtension on ThemeMode {
 }
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode? _themeMode;
+  var _platformBrightness =
+      SchedulerBinding.instance?.window.platformBrightness;
 
+  /// 系统 dark mode 发生变化
+  void systemDarkModeChange() {
+    if (_platformBrightness !=
+        SchedulerBinding.instance?.window.platformBrightness) {
+      _platformBrightness =
+          SchedulerBinding.instance?.window.platformBrightness;
+      notifyListeners();
+    }
+  }
+
+  /// 是否是暗黑模式
+  bool isDarkMode() {
+    if (_themeMode == null) {
+      _themeMode = getThemeMode();
+    }
+    if (_themeMode == ThemeMode.system) {
+      // 获取系统的 dark mode
+      return SchedulerBinding.instance?.window.platformBrightness ==
+          Brightness.dark;
+    }
+    return _themeMode == ThemeMode.dark;
+  }
+
+  /// 获取主题模式
   ThemeMode getThemeMode() {
     String theme = HiCache.getInstance().get(Const.theme);
     switch (theme) {
@@ -28,7 +55,7 @@ class ThemeProvider extends ChangeNotifier {
         _themeMode = ThemeMode.light;
         break;
     }
-    return _themeMode;
+    return _themeMode=ThemeMode.system;
   }
 
   /// 设置主题
@@ -40,30 +67,6 @@ class ThemeProvider extends ChangeNotifier {
 
   /// 获取主题
   ThemeData getTheme({bool isDarkMode = false}) {
-    // var theme = ThemeData();
-    // var themeData = theme.copyWith(
-    //   brightness: isDarkMode ? Brightness.dark : Brightness.light,
-    //   errorColor: isDarkMode ? HiColor.darkRed : HiColor.red,
-    //   // 背景主色调
-    //   primaryColor: isDarkMode ? HiColor.darkBg : Colors.white,
-    //   colorScheme: theme.colorScheme.copyWith(
-    //       primary: isDarkMode ? HiColor.darkBg : Colors.white,
-    //       background: isDarkMode ? HiColor.darkBg : Colors.white,
-    //       secondary: isDarkMode ? primary[50] : Colors.white,
-    //       brightness: isDarkMode ? Brightness.dark : Brightness.light),
-    //   // 指示器颜色
-    //   indicatorColor: isDarkMode ? primary[50] : Colors.white,
-    //   // 页面背景色
-    //   scaffoldBackgroundColor: isDarkMode ? HiColor.darkBg : Colors.white,
-    //   appBarTheme: null,
-    // );
-    // var themeData = ThemeData(
-    //     colorScheme: ColorScheme.fromSwatch(
-    //   primarySwatch: white,
-    //   brightness: isDarkMode ? Brightness.dark : Brightness.light,
-    //   accentColor: isDarkMode ? primary[50] : Colors.white,
-    //   backgroundColor: isDarkMode ? HiColor.darkBg : Colors.white,
-    // ));
     var themeData = ThemeData(
         // 背景主色调
         primaryColor: isDarkMode ? HiColor.darkBg : Colors.white,

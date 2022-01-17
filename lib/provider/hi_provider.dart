@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 List<SingleChildWidget> topProviders = [
-  Provider(create: (_) {
+  ChangeNotifierProvider(create: (_) {
     return ThemeProvider();
   })
 ];

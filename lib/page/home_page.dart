@@ -12,6 +12,7 @@ import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/loading_container.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final ValueChanged<int>? onJumpTo;
@@ -68,10 +69,17 @@ class _HomePageState extends HiState<HomePage>
     print("didChangeAppLifecycleState: $state");
   }
 
+  /// 监听系统暗黑模式变化
+  @override
+  void didChangePlatformBrightness() {
+    super.didChangePlatformBrightness();
+    context.read<ThemeProvider>().systemDarkModeChange();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var themeMode = ThemeProvider().getThemeMode();
+    var themeProvider = context.watch<ThemeProvider>();
     return Scaffold(
       body: LoadingContainer(
         isLoading: _isLoading,
@@ -80,19 +88,18 @@ class _HomePageState extends HiState<HomePage>
             NavigationAppBar(
               height: 50,
               child: _appBar(),
-              color:
-                  themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
-              statusStyle: themeMode == ThemeMode.light
-                  ? StatusStyle.DARK_CONTENT
-                  : StatusStyle.LIGHT_CONTENT,
+              color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
+              statusStyle: themeProvider.isDarkMode()
+                  ? StatusStyle.LIGHT_CONTENT
+                  : StatusStyle.DARK_CONTENT,
             ),
             Container(
               decoration: bottomBoxShadow(
-                  color: themeMode == ThemeMode.light
-                      ? Colors.white
-                      : HiColor.darkBg,
+                  color: themeProvider.isDarkMode()
+                      ? HiColor.darkBg
+                      : Colors.white,
                   shadowColor:
-                      themeMode == ThemeMode.light ? null : HiColor.darkBg),
+                      themeProvider.isDarkMode() ? HiColor.darkBg : null),
               child: _tabBar(),
             ),
             Flexible(
@@ -131,28 +138,28 @@ class _HomePageState extends HiState<HomePage>
       fontSize: 16,
       unselectedLabelColor: Colors.grey[500],
     );
-    return TabBar(
-      controller: _controller,
-      isScrollable: true,
-      indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(color: primary, width: 2.0),
-          insets: EdgeInsets.only(left: 15, right: 15)),
-      labelColor: primary,
-      unselectedLabelColor: Colors.grey[500],
-      padding: EdgeInsets.zero,
-      tabs: categoryList.map((tab) {
-        return Tab(
-          height: 36,
-          child: Padding(
-            padding: EdgeInsets.only(left: 5, right: 5),
-            child: Text(
-              tab.name ?? "",
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        );
-      }).toList(),
-    );
+    // return TabBar(
+    //   controller: _controller,
+    //   isScrollable: true,
+    //   indicator: UnderlineTabIndicator(
+    //       borderSide: BorderSide(color: primary, width: 2.0),
+    //       insets: EdgeInsets.only(left: 15, right: 15)),
+    //   labelColor: primary,
+    //   unselectedLabelColor: Colors.grey[500],
+    //   padding: EdgeInsets.zero,
+    //   tabs: categoryList.map((tab) {
+    //     return Tab(
+    //       height: 36,
+    //       child: Padding(
+    //         padding: EdgeInsets.only(left: 5, right: 5),
+    //         child: Text(
+    //           tab.name ?? "",
+    //           style: TextStyle(fontSize: 16),
+    //         ),
+    //       ),
+    //     );
+    //   }).toList(),
+    // );
   }
 
   void loadData() async {
@@ -222,9 +229,19 @@ class _HomePageState extends HiState<HomePage>
               ),
             ),
           )),
-          Icon(
-            Icons.explore_outlined,
-            color: Colors.grey,
+          InkWell(
+            onTap: () {
+              // var provider = context.read<ThemeProvider>();
+              // if (provider.isDarkMode()) {
+              //   provider.setTheme(ThemeMode.light);
+              // } else {
+              //   provider.setTheme(ThemeMode.dark);
+              // }
+            },
+            child: Icon(
+              Icons.explore_outlined,
+              color: Colors.grey,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 12),

@@ -12,6 +12,8 @@ import 'package:flutter_bili/http/dao/video_detail_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/model/video_detail_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
+import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/widget/app_bar.dart';
 import 'package:flutter_bili/widget/expandable_content.dart';
@@ -22,6 +24,7 @@ import 'package:flutter_bili/widget/video_large_card.dart';
 import 'package:flutter_bili/widget/video_tool_bar.dart';
 import 'package:flutter_bili/widget/video_view.dart';
 import 'package:flutter_overlay/flutter_overlay.dart';
+import 'package:provider/src/provider.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final HomeVideo videoModel;
@@ -72,7 +75,7 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
       body: Column(
         children: [
           _buildVideoView(),
-          _buildTabs(),
+          _buildTabs(context),
           Flexible(
               fit: FlexFit.loose, // child 实际大小
               child: TabBarView(
@@ -102,13 +105,16 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
         : Container();
   }
 
-  _buildTabs() {
+  _buildTabs(BuildContext context) {
+    var themeProvider = context.watch<ThemeProvider>();
     // 实现阴影效果 Material
     return Material(
       elevation: 4,
-      shadowColor: Colors.grey[100],
+      shadowColor:
+          themeProvider.isDarkMode() ? HiColor.darkBg : Colors.grey[100],
       child: Container(
         height: 40,
+        color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(left: 20),
         child: Row(
