@@ -10,6 +10,7 @@ import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/benefit_card.dart';
 import 'package:flutter_bili/widget/course_card.dart';
+import 'package:flutter_bili/widget/dark_mode_item.dart';
 import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/hi_blur.dart';
 import 'package:flutter_bili/widget/hi_flexible_header.dart';
@@ -138,6 +139,7 @@ class _ProfilePageState extends HiState<ProfilePage>
       BenefitCard(
         benefitList: _profileMo?.benefitList,
       ),
+      DarkModeItem(),
     ];
   }
 

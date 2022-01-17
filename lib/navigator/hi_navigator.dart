@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bili/navigator/bottom_navigator.dart';
+import 'package:flutter_bili/page/dark_mode_page.dart';
 import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/notice_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
@@ -25,7 +26,15 @@ int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus) {
 }
 
 /// 自定义路由封装，路由状态
-enum RouteStatus { login, registration, home, detail, notice, unknown }
+enum RouteStatus {
+  login,
+  registration,
+  home,
+  detail,
+  notice,
+  darkMode,
+  unknown
+}
 
 /// 获取路由状态
 RouteStatus getStatus(MaterialPage page) {
@@ -39,6 +48,8 @@ RouteStatus getStatus(MaterialPage page) {
     return RouteStatus.detail;
   } else if (page.child is NoticePage) {
     return RouteStatus.notice;
+  }else if (page.child is DarkModePage) {
+    return RouteStatus.darkMode;
   } else {
     return RouteStatus.unknown;
   }

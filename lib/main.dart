@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili/http/dao/login_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/bottom_navigator.dart';
+import 'package:flutter_bili/page/dark_mode_page.dart';
 import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/notice_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
@@ -230,6 +231,8 @@ class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
       page = pageWrap(RegistrationPage());
     } else if (routeStatus == RouteStatus.notice) {
       page = pageWrap(NoticePage());
+    }else if (routeStatus == RouteStatus.darkMode) {
+      page = pageWrap(DarkModePage());
     }
     if (page != null) {
       tmpPages = [...tmpPages, page]; // 添加当前页面
