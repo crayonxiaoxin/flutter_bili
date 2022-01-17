@@ -7,7 +7,7 @@ enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }
 /// 自定义沉浸式 appBar
 /// [height]=0 时，可配合 [Scaffold.extendBodyBehindAppBar] 属性 true 使用，实现沉浸
 class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final StatusStyle statusStyle;
+  final StatusStyle? statusStyle;
   final Color color;
   final double height;
   final Widget? leading;
@@ -19,7 +19,7 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const NavigationAppBar({
     Key? key,
-    this.statusStyle = StatusStyle.DARK_CONTENT,
+    this.statusStyle,
     this.color = Colors.transparent,
     this.height = 46,
     this.elevation = 0,

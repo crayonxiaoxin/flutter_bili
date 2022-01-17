@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/page/ranking_tab_page.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
+import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
@@ -35,18 +37,20 @@ class _RankingPageState extends State<RankingPage>
 
   @override
   Widget build(BuildContext context) {
+    var themeMode = ThemeProvider().getThemeMode();
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: NavigationAppBar(
         height: 0,
-        color: Colors.white,
-        statusStyle: StatusStyle.DARK_CONTENT,
+        color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+        statusStyle: themeMode == ThemeMode.light
+            ? StatusStyle.DARK_CONTENT
+            : StatusStyle.LIGHT_CONTENT,
       ),
       body: Column(
         children: [
           Container(
             color: Colors.white,
-            child: _tabBar(),
+            child: _tabBar(themeMode),
           ),
           _buildTabView(),
         ],
@@ -54,10 +58,12 @@ class _RankingPageState extends State<RankingPage>
     );
   }
 
-  _tabBar() {
+  _tabBar(ThemeMode themeMode) {
     return Container(
       alignment: Alignment.center,
-      decoration: bottomBoxShadow(),
+      decoration: bottomBoxShadow(
+          color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+          shadowColor: themeMode == ThemeMode.light ? null : HiColor.darkBg),
       child: HiTab(
         tabs.map((tab) {
           return Tab(

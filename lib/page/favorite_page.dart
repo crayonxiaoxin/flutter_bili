@@ -5,6 +5,8 @@ import 'package:flutter_bili/model/favorite_entity.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/page/video_detail_page.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
+import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/video_large_card.dart';
 
@@ -29,19 +31,26 @@ class _FavoritePageState
   }
 
   @override
-  PreferredSizeWidget? get appBar => NavigationAppBar(
-        elevation: 2,
-        height: 40,
-        backgroundColor: Colors.white,
-        shadowColor: Color(0x49eeeeee),
-        child: Container(
-          alignment: Alignment.center,
-          child: Text(
-            "收藏",
-            style: TextStyle(fontSize: 16),
-          ),
+  PreferredSizeWidget? get appBar {
+    var themeMode = ThemeProvider().getThemeMode();
+    return NavigationAppBar(
+      elevation: 2,
+      height: 40,
+      shadowColor: themeMode == ThemeMode.light ? Color(0x49eeeeee) : null,
+      color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+      statusStyle: themeMode == ThemeMode.light
+          ? StatusStyle.DARK_CONTENT
+          : StatusStyle.LIGHT_CONTENT,
+      child: Container(
+        color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+        alignment: Alignment.center,
+        child: Text(
+          "收藏",
+          style: TextStyle(fontSize: 16),
         ),
-      );
+      ),
+    );
+  }
 
   @override
   get contentChild => ListView(

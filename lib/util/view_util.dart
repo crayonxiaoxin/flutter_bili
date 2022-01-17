@@ -72,10 +72,10 @@ SizedBox hiSpace({double height = 1, double width = 1}) {
 }
 
 // 底部阴影
-BoxDecoration bottomBoxShadow() {
-  return BoxDecoration(color: Colors.white, boxShadow: [
+BoxDecoration bottomBoxShadow({color = Colors.white, shadowColor}) {
+  return BoxDecoration(color: color, boxShadow: [
     BoxShadow(
-        color: Colors.grey[100]!,
+        color: shadowColor ?? Colors.grey[100]!,
         offset: Offset(0.0, 5.0),
         // 阴影模糊程度
         blurRadius: 5.0,

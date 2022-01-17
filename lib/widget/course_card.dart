@@ -28,10 +28,7 @@ class CourseCard extends StatelessWidget {
         children: [
           Text(
             "职场进阶",
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           hiSpace(width: 10),
           Text(

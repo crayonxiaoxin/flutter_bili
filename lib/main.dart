@@ -6,7 +6,7 @@ import 'package:flutter_bili/page/login_page.dart';
 import 'package:flutter_bili/page/notice_page.dart';
 import 'package:flutter_bili/page/registration_page.dart';
 import 'package:flutter_bili/page/video_detail_page.dart';
-import 'package:flutter_bili/util/color.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/toast.dart';
 
 import 'db/hi_cache.dart';
@@ -39,11 +39,15 @@ class _BiliAppState extends State<BiliApp> {
                   ),
                 );
           return MaterialApp(
-              home: widget,
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primarySwatch: white,
-              ));
+            home: widget,
+            debugShowCheckedModeBanner: false,
+            // theme: ThemeData(
+            //   primarySwatch: white,
+            // ),
+            theme: ThemeProvider().getTheme(),
+            darkTheme: ThemeProvider().getTheme(isDarkMode: true),
+            themeMode: ThemeProvider().getThemeMode(),
+          );
         });
     // return MaterialApp(
     //   home: widget,

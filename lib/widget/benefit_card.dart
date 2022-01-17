@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/model/profile_entity.dart';
 import 'package:flutter_bili/util/adapt.dart';
@@ -5,8 +6,6 @@ import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_blur.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:clipboard/clipboard.dart';
-
 
 class BenefitCard extends StatelessWidget {
   final List<ProfileBenefit>? benefitList;
@@ -32,10 +31,7 @@ class BenefitCard extends StatelessWidget {
         children: [
           Text(
             "增值服务",
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           hiSpace(width: 10),
           Text(
@@ -95,7 +91,7 @@ class BenefitCard extends StatelessWidget {
     if (mo.url?.contains("http") == true) {
       _launchUrl(mo.url);
     } else {
-      FlutterClipboard.copy("${mo.url}").then((value){
+      FlutterClipboard.copy("${mo.url}").then((value) {
         showToast("${mo.url} 已复制到剪贴板");
       });
     }

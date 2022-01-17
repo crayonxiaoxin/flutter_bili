@@ -37,15 +37,15 @@ class NoticeCard extends StatelessWidget {
                   children: [
                     Text(
                       noticeMo?.title ?? "",
-                      style: TextStyle(color: Colors.black87, fontSize: 15),
+                      style: TextStyle(fontSize: 15),
                     ),
                     Text(noticeMo?.createTime ?? "",
-                        style: TextStyle(color: Colors.black87, fontSize: 12)),
+                        style: TextStyle(fontSize: 12)),
                   ],
                 ),
                 hiSpace(height: 5),
                 Text(noticeMo?.subtitle ?? "",
-                    style: TextStyle(color: Colors.black54, fontSize: 13)),
+                    style: TextStyle(color: Colors.grey, fontSize: 13)),
               ],
             ))
           ],

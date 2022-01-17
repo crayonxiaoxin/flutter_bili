@@ -8,4 +8,6 @@ class Const {
   static const String orderId = "1659";
   static const String login = "darklau";
   static const String password = "123456";
+
+  static const String theme = "theme-mode";
 }

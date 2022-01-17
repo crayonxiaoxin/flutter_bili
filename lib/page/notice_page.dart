@@ -3,6 +3,8 @@ import 'package:flutter_bili/core/hi_base_tab_state.dart';
 import 'package:flutter_bili/http/dao/notice_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/model/notice_entity.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
+import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/notice_card.dart';
 
@@ -16,26 +18,33 @@ class NoticePage extends StatefulWidget {
 class _NoticePageState
     extends HiBaseTabState<NoticeEntity, HomeBanner, NoticePage> {
   @override
-  PreferredSizeWidget? get appBar => NavigationAppBar(
-        elevation: 2,
-        height: 40,
-        backgroundColor: Colors.white,
-        shadowColor: Color(0x49eeeeee),
-        leading: BackButton(),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                "通知",
-                style: TextStyle(fontSize: 16),
-              ),
+  PreferredSizeWidget? get appBar {
+    var themeMode = ThemeProvider().getThemeMode();
+    return NavigationAppBar(
+      elevation: 2,
+      height: 40,
+      shadowColor: themeMode == ThemeMode.light ? Color(0x49eeeeee) : null,
+      color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+      statusStyle: themeMode == ThemeMode.light
+          ? StatusStyle.DARK_CONTENT
+          : StatusStyle.LIGHT_CONTENT,
+      leading: BackButton(),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            color: themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+            alignment: Alignment.center,
+            child: Text(
+              "通知",
+              style: TextStyle(fontSize: 16),
             ),
-            // Positioned(left: 0, child: BackButton())
-          ],
-        ),
-      );
+          ),
+          // Positioned(left: 0, child: BackButton())
+        ],
+      ),
+    );
+  }
 
   @override
   get contentChild => ListView(

@@ -82,8 +82,7 @@ class _LoginInputState extends State<LoginInput> {
       cursorColor: primary,
       autofocus: !(widget.obscureText ?? false),
       controller: widget.controller,
-      style: TextStyle(
-          fontSize: 16, color: Colors.black, fontWeight: FontWeight.w300),
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 20, right: 20),
           border: InputBorder.none,

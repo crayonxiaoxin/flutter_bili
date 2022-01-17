@@ -46,6 +46,7 @@ class _ProfilePageState extends HiState<ProfilePage>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: NavigationAppBar(
+        statusStyle: StatusStyle.DARK_CONTENT,
         height: 0,
       ),
       body: NestedScrollView(

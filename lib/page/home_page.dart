@@ -5,6 +5,7 @@ import 'package:flutter_bili/http/dao/home_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/page/home_tab_page.dart';
+import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/util/view_util.dart';
@@ -70,8 +71,8 @@ class _HomePageState extends HiState<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var themeMode = ThemeProvider().getThemeMode();
     return Scaffold(
-      backgroundColor: Colors.white,
       body: LoadingContainer(
         isLoading: _isLoading,
         child: Column(
@@ -79,11 +80,19 @@ class _HomePageState extends HiState<HomePage>
             NavigationAppBar(
               height: 50,
               child: _appBar(),
-              color: Colors.white,
-              statusStyle: StatusStyle.DARK_CONTENT,
+              color:
+                  themeMode == ThemeMode.light ? Colors.white : HiColor.darkBg,
+              statusStyle: themeMode == ThemeMode.light
+                  ? StatusStyle.DARK_CONTENT
+                  : StatusStyle.LIGHT_CONTENT,
             ),
             Container(
-              decoration: bottomBoxShadow(),
+              decoration: bottomBoxShadow(
+                  color: themeMode == ThemeMode.light
+                      ? Colors.white
+                      : HiColor.darkBg,
+                  shadowColor:
+                      themeMode == ThemeMode.light ? null : HiColor.darkBg),
               child: _tabBar(),
             ),
             Flexible(
@@ -178,7 +187,7 @@ class _HomePageState extends HiState<HomePage>
   }
 
   _appBar() {
-    return Padding(
+    return Container(
       padding: EdgeInsets.only(left: 15, right: 15),
       child: Row(
         children: [
