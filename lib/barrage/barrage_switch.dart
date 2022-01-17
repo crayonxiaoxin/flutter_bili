@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/util/color.dart';
-import 'package:flutter_bili/util/view_util.dart';
 
 class BarrageSwitch extends StatefulWidget {
-  // 初始化时是否展开
+  /// 初始化时是否展开
   final bool initSwitch;
 
-  // 是否为输入中
+  /// 是否为输入中
   final bool inputShowing;
 
-  final VoidCallback? onShowingInput;
-  final ValueChanged? onBarrageSwitch;
+  /// 输入框回调
+  final VoidCallback onShowingInput;
+
+  /// 展开收起回调
+  final ValueChanged onBarrageSwitch;
 
   const BarrageSwitch(
       {Key? key,
       this.initSwitch = true,
       this.inputShowing = false,
-      this.onShowingInput,
-      this.onBarrageSwitch})
+      required this.onShowingInput,
+      required this.onBarrageSwitch})
       : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class _BarrageSwitchState extends State<BarrageSwitch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
+        padding: EdgeInsets.only(left: 5, right: 5),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[200]!),
             borderRadius: BorderRadius.circular(20)),
@@ -45,26 +47,32 @@ class _BarrageSwitchState extends State<BarrageSwitch> {
             if (isExpanded)
               InkWell(
                 onTap: () {
-                  widget.onShowingInput?.call();
+                  widget.onShowingInput.call();
                 },
-                child: Text(
-                  widget.inputShowing ? "弹幕输入中" : "请输入弹幕",
-                  style: TextStyle(fontSize: 13, color: Colors.grey),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 5, right: 5, top: 3, bottom: 3),
+                  child: Text(
+                    widget.inputShowing ? "弹幕输入中" : "点我发弹幕",
+                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
                 ),
               ),
-            if (isExpanded) hiSpace(width: 10),
             InkWell(
               onTap: () {
                 var expanded = !isExpanded;
                 setState(() {
                   isExpanded = expanded;
                 });
-                widget.onBarrageSwitch?.call(expanded);
+                widget.onBarrageSwitch.call(expanded);
               },
-              child: Icon(
-                Icons.live_tv_rounded,
-                size: 20,
-                color: isExpanded ? primary : Colors.grey,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.live_tv_rounded,
+                  size: 20,
+                  color: isExpanded ? primary : Colors.grey,
+                ),
               ),
             ),
           ],

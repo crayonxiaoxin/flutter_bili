@@ -279,6 +279,13 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
             _barrageKey.currentState?.send(value);
           });
         },
+        onBarrageSwitch: (open) {
+          if (open) {
+            _barrageKey.currentState?.play();
+          } else {
+            _barrageKey.currentState?.pause();
+          }
+        },
       ),
     );
     return InkWell(
