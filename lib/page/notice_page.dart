@@ -48,17 +48,16 @@ class _NoticePageState
   }
 
   @override
-  get contentChild => ListView(
+  get contentChild => ListView.builder(
         physics: AlwaysScrollableScrollPhysics(),
         controller: scrollController,
         padding: EdgeInsets.only(top: 8),
-        children: [
-          ...dataList.map((e) {
-            return NoticeCard(
-              noticeMo: e,
-            );
-          }).toList()
-        ],
+        itemCount: dataList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return NoticeCard(
+            noticeMo: dataList[index],
+          );
+        },
       );
 
   @override

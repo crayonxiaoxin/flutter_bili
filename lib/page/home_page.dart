@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/http/core/hi_error.dart';
@@ -237,6 +239,7 @@ class _HomePageState extends HiState<HomePage>
               // } else {
               //   provider.setTheme(ThemeMode.dark);
               // }
+              _mockException();
             },
             child: Icon(
               Icons.explore_outlined,
@@ -258,5 +261,38 @@ class _HomePageState extends HiState<HomePage>
         ],
       ),
     );
+  }
+
+  /// 异常捕获
+  void _mockException() async {
+    // try catch 捕获同步异常
+    try {
+      throw StateError("This is a sync error.");
+    } catch (e) {
+      print(e);
+    }
+    // catchError 捕获异步异常
+    Future.delayed(Duration(seconds: 1))
+        .then((value) => throw StateError("This is a async error."))
+        .catchError((e) {
+      print(e);
+    });
+    // 异步转同步 try catch 捕获异常
+    try {
+      await Future.delayed(Duration(seconds: 1))
+          .then((value) => throw StateError("This is the second async error."));
+    } catch (e) {
+      print(e);
+    }
+    // runZonedGuarded 捕获 代码块 异常
+    runZonedGuarded(() {
+      // throw StateError("runZonedGuarded: This is a sync error.");
+      Future.delayed(Duration(seconds: 1)).then((value) =>
+          throw StateError("runZonedGuarded: This is the second async error."));
+    }, (Object error, StackTrace stack) {
+      print(error);
+    });
+    // 测试统一捕获异常
+    throw StateError("------测试统一捕获异常.");
   }
 }

@@ -53,16 +53,27 @@ class _FavoritePageState
     );
   }
 
+  // @override
+  // get contentChild => ListView(
+  //       physics: AlwaysScrollableScrollPhysics(),
+  //       controller: scrollController,
+  //       padding: EdgeInsets.only(top: 8),
+  //       children: [
+  //         ...dataList.map((e) {
+  //           return VideoLargeCard(videoModel: e);
+  //         }).toList()
+  //       ],
+  //     );
+
   @override
-  get contentChild => ListView(
+  get contentChild => ListView.builder(
         physics: AlwaysScrollableScrollPhysics(),
         controller: scrollController,
         padding: EdgeInsets.only(top: 8),
-        children: [
-          ...dataList.map((e) {
-            return VideoLargeCard(videoModel: e);
-          }).toList()
-        ],
+        itemCount: dataList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return VideoLargeCard(videoModel: dataList[index]);
+        },
       );
 
   @override

@@ -4,7 +4,6 @@ import 'package:flutter_bili/http/dao/home_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/video_card.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomeTabPage extends StatefulWidget {
   final String categoryName;
@@ -37,38 +36,70 @@ class _HomeTabPageState
     );
   }
 
+  // @override
+  // get contentChild => ListView(
+  //       // 当列表内容不足撑开屏幕时，防止下拉刷新和上拉加载失效，在android上可以下拉刷新，但依然不能上拉加载
+  //       physics: const AlwaysScrollableScrollPhysics(),
+  //       // 列表滚动监听
+  //       controller: scrollController,
+  //       padding: EdgeInsets.only(left: 8, right: 8),
+  //       children: [
+  //         StaggeredGrid.count(
+  //           crossAxisCount: 2,
+  //           mainAxisSpacing: 5,
+  //           crossAxisSpacing: 5,
+  //           axisDirection: AxisDirection.down,
+  //           children: [
+  //             if (widget.bannerList != null)
+  //               StaggeredGridTile.count(
+  //                   crossAxisCellCount: 2,
+  //                   mainAxisCellCount: 1,
+  //                   child: Padding(
+  //                     padding: EdgeInsets.only(bottom: 8),
+  //                     child: _banner(),
+  //                   )),
+  //             ...dataList.map((e) {
+  //               return StaggeredGridTile.count(
+  //                   crossAxisCellCount: 1,
+  //                   mainAxisCellCount: 1,
+  //                   child: VideoCard(e));
+  //             }).toList()
+  //           ],
+  //         )
+  //       ],
+  //     );
+
   @override
   get contentChild => ListView(
-        // 当列表内容不足撑开屏幕时，防止下拉刷新和上拉加载失效，在android上可以下拉刷新，但依然不能上拉加载
         physics: const AlwaysScrollableScrollPhysics(),
-        // 列表滚动监听
         controller: scrollController,
         padding: EdgeInsets.only(left: 8, right: 8),
         children: [
-          StaggeredGrid.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-            axisDirection: AxisDirection.down,
-            children: [
-              if (widget.bannerList != null)
-                StaggeredGridTile.count(
-                    crossAxisCellCount: 2,
-                    mainAxisCellCount: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: _banner(),
-                    )),
-              ...dataList.map((e) {
-                return StaggeredGridTile.count(
-                    crossAxisCellCount: 1,
-                    mainAxisCellCount: 1,
-                    child: VideoCard(e));
-              }).toList()
-            ],
+          ...[
+            if (widget.bannerList != null)
+              Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: _banner(),
+              )
+          ],
+          GridView.builder(
+            // [physics] 修复不能滚动的问题
+            physics: NeverScrollableScrollPhysics(),
+            // [shrinkWrap] 修复 `child.hasSize` is not true 问题
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.95),
+            itemCount: dataList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return VideoCard(dataList[index]);
+            },
           )
         ],
       );
+
+  get _childCount {
+    return widget.bannerList != null ? dataList.length + 1 : dataList.length;
+  }
 
   @override
   Future<HomeEntity> getData(int pageIndex) {

@@ -17,19 +17,18 @@ class RankingTabPage extends StatefulWidget {
 class _RankingTabPageState
     extends HiBaseTabState<RankingEntity, HomeVideo, RankingTabPage> {
   @override
-  get contentChild => ListView(
+  get contentChild => ListView.builder(
         // 当列表内容不足撑开屏幕时，防止下拉刷新和上拉加载失效，在android上可以下拉刷新，但依然不能上拉加载
         physics: const AlwaysScrollableScrollPhysics(),
         // 列表滚动监听
         controller: scrollController,
         padding: EdgeInsets.only(top: 8),
-        children: [
-          ...dataList.map((e) {
-            return VideoLargeCard(
-              videoModel: e,
-            );
-          }).toList()
-        ],
+        itemCount: dataList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return VideoLargeCard(
+            videoModel: dataList[index],
+          );
+        },
       );
 
   @override
