@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/core/hi_state.dart';
-import 'package:flutter_bili/http/core/hi_error.dart';
 import 'package:flutter_bili/http/dao/profile_dao.dart';
 import 'package:flutter_bili/model/profile_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
@@ -15,6 +14,7 @@ import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/hi_blur.dart';
 import 'package:flutter_bili/widget/hi_flexible_header.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:hi_net/core/hi_error.dart';
 import 'package:provider/src/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -73,7 +73,8 @@ class _ProfilePageState extends HiState<ProfilePage>
     return SliverAppBar(
       expandedHeight: expandedHeight,
       elevation: 2,
-      backgroundColor: themeProvider.isDarkMode()?HiColor.darkBg:Colors.white,
+      backgroundColor:
+          themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
       shadowColor: Color(0x49eeeeee),
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(

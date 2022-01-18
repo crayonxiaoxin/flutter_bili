@@ -1,6 +1,6 @@
-import 'package:flutter_bili/http/core/hi_net.dart';
 import 'package:flutter_bili/http/request/video_detail_request.dart';
 import 'package:flutter_bili/model/video_detail_entity.dart';
+import 'package:hi_net/hi_net.dart';
 
 /// 视频详情页 Dao
 class VideoDetailDao {

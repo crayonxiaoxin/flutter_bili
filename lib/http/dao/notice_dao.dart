@@ -1,6 +1,6 @@
-import 'package:flutter_bili/http/core/hi_net.dart';
 import 'package:flutter_bili/http/request/notice_request.dart';
 import 'package:flutter_bili/model/notice_entity.dart';
+import 'package:hi_net/hi_net.dart';
 
 class NoticeDao {
   static Future<NoticeEntity> get(

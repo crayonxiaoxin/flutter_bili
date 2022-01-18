@@ -1,7 +1,10 @@
-import 'package:flutter_bili/http/core/dio_adapter.dart';
-import 'package:flutter_bili/http/core/hi_error.dart';
-import 'package:flutter_bili/http/core/hi_net_adapter.dart';
-import 'package:flutter_bili/http/request/base_request.dart';
+library hi_net;
+
+import 'package:hi_net/request/hi_base_request.dart';
+
+import 'core/dio_adapter.dart';
+import 'core/hi_error.dart';
+import 'core/hi_net_adapter.dart';
 
 class HiNet {
   HiNet._();
@@ -9,13 +12,11 @@ class HiNet {
   static HiNet? _instance;
 
   static HiNet getInstance() {
-    if (_instance == null) {
-      _instance = HiNet._();
-    }
+    _instance ??= HiNet._();
     return _instance!;
   }
 
-  Future fire(BaseRequest request) async {
+  Future fire(HiBaseRequest request) async {
     HiNetResponse? response;
     var error;
     try {
@@ -46,7 +47,7 @@ class HiNet {
     }
   }
 
-  Future<dynamic> send<T>(BaseRequest request) async {
+  Future<dynamic> send<T>(HiBaseRequest request) async {
     printLog('url:${request.url()}');
     printLog('method:${request.httpMethod()}');
     // request.addHeader("token", "123");

@@ -1,8 +1,8 @@
-import 'package:flutter_bili/http/core/hi_net.dart';
 import 'package:flutter_bili/http/request/cancel_favorite_request.dart';
 import 'package:flutter_bili/http/request/favorite_request.dart';
 import 'package:flutter_bili/http/request/favorites_request.dart';
 import 'package:flutter_bili/model/favorite_entity.dart';
+import 'package:hi_net/hi_net.dart';
 
 class FavoriteDao {
   static favorite(String vid, bool favorite) async {

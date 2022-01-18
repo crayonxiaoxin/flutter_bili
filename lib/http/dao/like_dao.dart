@@ -1,6 +1,6 @@
-import 'package:flutter_bili/http/core/hi_net.dart';
 import 'package:flutter_bili/http/request/like_request.dart';
 import 'package:flutter_bili/http/request/unlike_request.dart';
+import 'package:hi_net/hi_net.dart';
 
 class LikeDao {
   static like(String vid, bool like) async {
