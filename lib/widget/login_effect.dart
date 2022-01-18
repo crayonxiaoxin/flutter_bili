@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/util/adapt.dart';
+import 'package:hi_base/adapt.dart';
 
 class LoginEffect extends StatefulWidget {
   const LoginEffect({Key? key, this.protect = false}) : super(key: key);

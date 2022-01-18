@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:hi_base/hi_state.dart';
 import 'package:hi_net/core/hi_error.dart';
 
 /// 通用底层带分页和刷新的页面框架

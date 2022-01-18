@@ -1,3 +1,5 @@
+library hi_cache;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HiCache {
@@ -9,9 +11,7 @@ class HiCache {
 
   static HiCache? _instance;
 
-  HiCache._pre(SharedPreferences prefs) {
-    this.prefs = prefs;
-  }
+  HiCache._pre(this.prefs);
 
   /// 预初始化，防止 get 时还没有初始化完成
   static Future<HiCache> preInit() async {
@@ -23,17 +23,12 @@ class HiCache {
   }
 
   static HiCache getInstance() {
-    if (_instance == null) {
-      _instance = HiCache._();
-    }
+    _instance ??= HiCache._();
     return _instance!;
   }
 
   void init() async {
-    if (prefs == null) {
-      // 这里是 future 类型的，可能第一次init时，prefs还未初始化成功，所以需要预初始化
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
   }
 
   HiCache setBool(String key, bool value) {

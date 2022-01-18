@@ -13,9 +13,9 @@ import 'package:flutter_bili/provider/hi_provider.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/hi_defend.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:hi_cache/hi_cache.dart';
 import 'package:provider/provider.dart';
 
-import 'db/hi_cache.dart';
 import 'navigator/hi_navigator.dart';
 
 void main() {

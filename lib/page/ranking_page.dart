@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili/page/ranking_tab_page.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/color.dart';
-import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/hi_tab.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:provider/src/provider.dart';
 
 class RankingPage extends StatefulWidget {

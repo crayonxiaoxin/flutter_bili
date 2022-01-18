@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bili/util/adapt.dart';
+import 'package:hi_base/adapt.dart';
 
 enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }
 

@@ -23,7 +23,7 @@ packages:
     source: hosted
     version: "2.1.0"
   cached_network_image:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cached_network_image
       url: "https://pub.dartlang.org"
@@ -198,6 +198,20 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  hi_base:
+    dependency: "direct main"
+    description:
+      path: "component/hi_base"
+      relative: true
+    source: path
+    version: "0.0.1"
+  hi_cache:
+    dependency: "direct main"
+    description:
+      path: "component/hi_cache"
+      relative: true
+    source: path
+    version: "0.0.1"
   hi_net:
     dependency: "direct main"
     description:
@@ -367,7 +381,7 @@ packages:
     source: hosted
     version: "0.27.3"
   shared_preferences:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
@@ -638,7 +652,7 @@ packages:
     source: hosted
     version: "0.2.0"
   web_socket_channel:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: web_socket_channel
       url: "https://pub.dartlang.org"

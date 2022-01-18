@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/util/color.dart';
-import 'package:flutter_bili/util/view_util.dart';
+import 'package:hi_base/view_util.dart';
 
 class BarrageInput extends StatelessWidget {
   final VoidCallback? onTabClose;

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/http/dao/profile_dao.dart';
 import 'package:flutter_bili/model/profile_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
-import 'package:flutter_bili/util/view_util.dart';
 import 'package:flutter_bili/widget/benefit_card.dart';
 import 'package:flutter_bili/widget/course_card.dart';
 import 'package:flutter_bili/widget/dark_mode_item.dart';
@@ -14,6 +12,8 @@ import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/hi_blur.dart';
 import 'package:flutter_bili/widget/hi_flexible_header.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:hi_base/hi_state.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:hi_net/core/hi_error.dart';
 import 'package:provider/src/provider.dart';
 

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/util/format_util.dart';
+import 'package:hi_base/format_util.dart';
 
 /// 带缓存的 image
 Widget cachedImage(String? imageUrl,
@@ -23,7 +23,7 @@ Widget cachedImage(String? imageUrl,
 /// 黑色线性渐变
 blackLinearGradient({bool fromTop = false}) {
   return LinearGradient(
-      colors: [
+      colors: const [
         Colors.black54,
         Colors.black45,
         Colors.black38,
@@ -37,7 +37,7 @@ blackLinearGradient({bool fromTop = false}) {
 
 /// 文字 icon 组合
 smallIconText(IconData icon, var text) {
-  var style = TextStyle(fontSize: 12, color: Colors.grey);
+  var style = const TextStyle(fontSize: 12, color: Colors.grey);
   if (text is int) {
     text = countFormat(text);
   }
@@ -55,7 +55,7 @@ smallIconText(IconData icon, var text) {
 }
 
 /// border
-borderLine({bottom: true, top: false}) {
+borderLine({bottom = true, top = false}) {
   var borderSide = BorderSide(color: Colors.grey[200]!, width: 0.5);
   return Border(
     top: top ? borderSide : BorderSide.none,
@@ -76,7 +76,7 @@ BoxDecoration bottomBoxShadow({color = Colors.white, shadowColor}) {
   return BoxDecoration(color: color, boxShadow: [
     BoxShadow(
         color: shadowColor ?? Colors.grey[100]!,
-        offset: Offset(0.0, 5.0),
+        offset: const Offset(0.0, 5.0),
         // 阴影模糊程度
         blurRadius: 5.0,
         // 阴影扩散程度

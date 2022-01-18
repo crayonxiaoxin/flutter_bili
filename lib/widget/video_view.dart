@@ -1,8 +1,8 @@
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/util/adapt.dart';
 import 'package:flutter_bili/util/color.dart';
-import 'package:flutter_bili/util/view_util.dart';
+import 'package:hi_base/adapt.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:video_player/video_player.dart';
 
 import 'hi_video_controllers.dart';

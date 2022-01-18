@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/util/adapt.dart';
-import 'package:flutter_bili/util/view_util.dart';
+import 'package:hi_base/adapt.dart';
+import 'package:hi_base/view_util.dart';
 
 /// 自定义顶部 appBar（登录、注册）
 appBar(String title, String rightTitle, VoidCallback? rightButtonClick,

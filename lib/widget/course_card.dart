@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/model/profile_entity.dart';
-import 'package:flutter_bili/util/adapt.dart';
-import 'package:flutter_bili/util/view_util.dart';
+import 'package:hi_base/adapt.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CourseCard extends StatelessWidget {
