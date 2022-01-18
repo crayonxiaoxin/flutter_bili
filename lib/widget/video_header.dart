@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/model/home_entity.dart';
-import 'package:flutter_bili/util/color.dart';
+import 'package:hi_base/color.dart';
 import 'package:hi_base/format_util.dart';
 import 'package:hi_base/view_util.dart';
 

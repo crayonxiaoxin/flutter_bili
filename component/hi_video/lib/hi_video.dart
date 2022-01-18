@@ -1,7 +1,9 @@
+library hi_video;
+
 import 'package:chewie/chewie.dart' hide MaterialControls;
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/util/color.dart';
 import 'package:hi_base/adapt.dart';
+import 'package:hi_base/color.dart';
 import 'package:hi_base/view_util.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,15 +19,16 @@ class VideoView extends StatefulWidget {
   final Widget? overlayUI;
   final Widget? barrageUI;
 
-  const VideoView(this.url,
-      {Key? key,
-      this.cover,
-      this.autoPlay = false,
-      this.looping = false,
-      this.aspectRatio = 16 / 9,
-      this.overlayUI,
-      this.barrageUI})
-      : super(key: key);
+  const VideoView(
+    this.url, {
+    Key? key,
+    this.cover,
+    this.autoPlay = false,
+    this.looping = false,
+    this.aspectRatio = 16 / 9,
+    this.overlayUI,
+    this.barrageUI,
+  }) : super(key: key);
 
   @override
   _VideoViewState createState() => _VideoViewState();

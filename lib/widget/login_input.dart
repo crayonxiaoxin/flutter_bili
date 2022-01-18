@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/util/color.dart';
+import 'package:hi_base/color.dart';
 
 class LoginInput extends StatefulWidget {
   const LoginInput(this.title, this.hint,

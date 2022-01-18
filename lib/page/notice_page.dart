@@ -4,9 +4,9 @@ import 'package:flutter_bili/http/dao/notice_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/model/notice_entity.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
-import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/notice_card.dart';
+import 'package:hi_base/color.dart';
 import 'package:provider/src/provider.dart';
 
 class NoticePage extends StatefulWidget {

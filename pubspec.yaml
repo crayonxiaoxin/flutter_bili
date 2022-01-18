@@ -33,6 +33,8 @@ dependencies:
     path: ./component/hi_base
   hi_cache:
     path: ./component/hi_cache
+  hi_video:
+    path: ./component/hi_video
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

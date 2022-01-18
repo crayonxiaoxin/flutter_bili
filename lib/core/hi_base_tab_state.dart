@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
-import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:hi_base/color.dart';
 import 'package:hi_base/hi_state.dart';
 import 'package:hi_net/core/hi_error.dart';
 

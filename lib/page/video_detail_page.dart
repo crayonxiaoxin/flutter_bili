@@ -11,7 +11,6 @@ import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/model/video_detail_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
-import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/util/toast.dart';
 import 'package:flutter_bili/widget/app_bar.dart';
 import 'package:flutter_bili/widget/expandable_content.dart';
@@ -20,11 +19,12 @@ import 'package:flutter_bili/widget/navigation_bar.dart';
 import 'package:flutter_bili/widget/video_header.dart';
 import 'package:flutter_bili/widget/video_large_card.dart';
 import 'package:flutter_bili/widget/video_tool_bar.dart';
-import 'package:flutter_bili/widget/video_view.dart';
 import 'package:flutter_overlay/flutter_overlay.dart';
 import 'package:hi_barrage/hi_barrage.dart';
+import 'package:hi_base/color.dart';
 import 'package:hi_base/hi_state.dart';
 import 'package:hi_net/core/hi_error.dart';
+import 'package:hi_video/hi_video.dart';
 import 'package:provider/src/provider.dart';
 
 class VideoDetailPage extends StatefulWidget {

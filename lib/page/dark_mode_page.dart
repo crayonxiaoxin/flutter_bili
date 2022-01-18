@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
-import 'package:flutter_bili/util/color.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:hi_base/color.dart';
 import 'package:provider/src/provider.dart';
 
 class DarkModePage extends StatefulWidget {
