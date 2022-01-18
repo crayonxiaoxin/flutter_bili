@@ -14,12 +14,12 @@ class DarkModeItem extends StatelessWidget {
         HiNavigator.getInstance().onJumpTo(RouteStatus.darkMode);
       },
       child: Container(
-        padding: EdgeInsets.only(left: 15,top: 5),
+        padding: EdgeInsets.all(10),
         child: Row(
           children: [
             Text(
               "夜间模式",
-              style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Padding(
               padding: EdgeInsets.only(left: 10, top: 2),
