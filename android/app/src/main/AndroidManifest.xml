@@ -24,9 +24,11 @@
         </intent>
     </queries>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="flutter_bili"
+        android:label="Flutter Bili"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
