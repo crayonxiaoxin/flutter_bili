@@ -1,13 +1,15 @@
+library hi_barrage;
+
 import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/barrage/barrage_item.dart';
-import 'package:flutter_bili/barrage/barrage_view_util.dart';
-import 'package:flutter_bili/barrage/hi_socket.dart';
-import 'package:flutter_bili/barrage/i_barrage.dart';
-import 'package:flutter_bili/model/barrage_entity.dart';
-import 'package:flutter_bili/util/adapt.dart';
+
+import 'barrage_entity.dart';
+import 'barrage_item.dart';
+import 'barrage_view_util.dart';
+import 'hi_socket.dart';
+import 'i_barrage.dart';
 
 /// 弹幕状态
 enum BarrageStatus { play, pause }
@@ -20,10 +22,13 @@ class HiBarrage extends StatefulWidget {
   final double top;
   final bool autoPlay;
 
+  final Map<String, dynamic> headers;
+
   const HiBarrage(
       {Key? key,
       this.lineCount = 4,
       required this.vid,
+      required this.headers,
       this.speed = 800,
       this.top = 0,
       this.autoPlay = false})
@@ -47,7 +52,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
   @override
   void initState() {
     super.initState();
-    _hiSocket = HiSocket();
+    _hiSocket = HiSocket(widget.headers);
     _hiSocket?.open(widget.vid).listen((value) {
       _handleMessage(value);
     });
@@ -62,7 +67,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
 
   @override
   Widget build(BuildContext context) {
-    _width = Adapt.screenWidth();
+    _width = MediaQuery.of(context).size.width;
     _height = _width / 16 * 9;
     return SizedBox(
       width: _width,
@@ -132,7 +137,8 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
     double perRowHeight = 30;
     var line = _barrageIndex % widget.lineCount;
     _barrageIndex++;
-    var top = line * perRowHeight + widget.top + Adapt.paddingTop();
+    var statusBarHeight = MediaQuery.of(context).padding.top;
+    var top = line * perRowHeight + widget.top + statusBarHeight;
     // 为每条弹幕生成唯一 id
     String id = "${_random.nextInt(10000)}:${model.content}";
     var item = BarrageItem(

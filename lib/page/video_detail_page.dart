@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/barrage/barrage_input.dart';
 import 'package:flutter_bili/barrage/barrage_switch.dart';
-import 'package:flutter_bili/barrage/hi_barrage.dart';
+import 'package:flutter_bili/const.dart';
 import 'package:flutter_bili/core/hi_state.dart';
 import 'package:flutter_bili/http/dao/favorite_dao.dart';
 import 'package:flutter_bili/http/dao/like_dao.dart';
@@ -23,6 +23,7 @@ import 'package:flutter_bili/widget/video_large_card.dart';
 import 'package:flutter_bili/widget/video_tool_bar.dart';
 import 'package:flutter_bili/widget/video_view.dart';
 import 'package:flutter_overlay/flutter_overlay.dart';
+import 'package:hi_barrage/hi_barrage.dart';
 import 'package:hi_net/core/hi_error.dart';
 import 'package:provider/src/provider.dart';
 
@@ -100,6 +101,7 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
               key: _barrageKey,
               vid: model?.vid ?? "",
               autoPlay: true,
+              headers: Const.headers(),
             ),
           )
         : Container();

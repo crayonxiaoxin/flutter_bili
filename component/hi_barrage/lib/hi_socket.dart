@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/const.dart';
-import 'package:flutter_bili/http/dao/login_dao.dart';
-import 'package:flutter_bili/model/barrage_entity.dart';
 import 'package:web_socket_channel/io.dart';
+
+import 'barrage_entity.dart';
 
 /// 负责与后端进行 webSocket 通信
 class HiSocket implements ISocket {
+  final Map<String, dynamic> headers;
+
+  HiSocket(this.headers);
+
   /// 接口地址
   static const _URL = "wss://api.devio.org/uapi/fa/barrage/";
 
@@ -30,7 +33,7 @@ class HiSocket implements ISocket {
   @override
   ISocket open(String? vid) {
     _webSocketChannel = IOWebSocketChannel.connect(_URL + "$vid",
-        headers: _headers(), pingInterval: Duration(seconds: _pingInterval));
+        headers: headers, pingInterval: Duration(seconds: _pingInterval));
     _webSocketChannel?.stream.handleError((e) {
       print("socket连接发生错误: $e");
     }).listen((message) {
@@ -44,17 +47,6 @@ class HiSocket implements ISocket {
   ISocket send(String? message) {
     _webSocketChannel?.sink.add(message);
     return this;
-  }
-
-  /// 设置请求头校验
-  _headers() {
-    Map<String, dynamic> headers = {
-      Const.authTokenKey: Const.authToken,
-      Const.courseFlagKey: Const.courseFlag,
-    };
-    // 需要登录
-    headers[LoginDao.KEY_BOARDING_PASS] = LoginDao.getBoardingPass();
-    return headers;
   }
 
   /// 处理服务端的返回

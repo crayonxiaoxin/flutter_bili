@@ -1,3 +1,5 @@
+import 'http/dao/login_dao.dart';
+
 class Const {
   /// authToken 更新 https://coding.imooc.com/learn/questiondetail/y0K5g683G4zXe2QN.html
   static const String authTokenKey = "auth-token";
@@ -10,4 +12,14 @@ class Const {
   static const String password = "123456";
 
   static const String theme = "theme-mode";
+
+  static headers() {
+    Map<String, dynamic> headers = {
+      Const.authTokenKey: Const.authToken,
+      Const.courseFlagKey: Const.courseFlag,
+    };
+    // 需要登录
+    headers[LoginDao.KEY_BOARDING_PASS] = LoginDao.getBoardingPass();
+    return headers;
+  }
 }

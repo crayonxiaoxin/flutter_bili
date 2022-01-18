@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili/barrage/barrage_transition.dart';
+
+import 'barrage_transition.dart';
 
 class BarrageItem extends StatelessWidget {
   final String id;
@@ -18,7 +19,7 @@ class BarrageItem extends StatelessWidget {
       : super(key: key);
 
   /// fix 动画状态错乱
-  var _key = GlobalKey<BarrageTransitionState>();
+  final _key = GlobalKey<BarrageTransitionState>();
 
   @override
   Widget build(BuildContext context) {
