@@ -395,7 +395,7 @@ class _MaterialControlsState extends State<MaterialControls>
               isFinished: isFinished,
               isPlaying: controller.value.isPlaying,
               show: !_dragging && !notifier.hideStuff,
-              onPressed: (){},
+              onPressed: () {},
             ),
     );
   }
@@ -586,8 +586,8 @@ class _MaterialControlsState extends State<MaterialControls>
         },
         colors: chewieController.materialProgressColors ??
             ChewieProgressColors(
-              playedColor: Theme.of(context).accentColor,
-              handleColor: Theme.of(context).accentColor,
+              playedColor: Theme.of(context).colorScheme.secondary,
+              handleColor: Theme.of(context).colorScheme.secondary,
               bufferedColor: Theme.of(context).backgroundColor.withOpacity(0.5),
               backgroundColor: Theme.of(context).disabledColor.withOpacity(.5),
             ),
@@ -688,9 +688,7 @@ class _MaterialControlsState extends State<MaterialControls>
               right: 8.0,
             ),
             child: Icon(
-              (_latestValue != null && _latestValue.volume > 0)
-                  ? Icons.volume_up
-                  : Icons.volume_off,
+              (_latestValue.volume > 0) ? Icons.volume_up : Icons.volume_off,
               color: Colors.white,
             ),
           ),
@@ -703,8 +701,8 @@ class _MaterialControlsState extends State<MaterialControls>
   _loadingIndicator() {
     // 初始化时 是否显示 loading
     return widget.showLoadingOnInitialize
-        ? CircularProgressIndicator()
-        : Container(
+        ? const CircularProgressIndicator()
+        : const SizedBox(
             width: 0,
             height: 0,
           );
@@ -715,10 +713,10 @@ class _MaterialControlsState extends State<MaterialControls>
     return widget.overlayUI != null
         ? AnimatedOpacity(
             opacity: notifier.hideStuff ? 0.0 : 1.0,
-            duration: Duration(microseconds: 300),
+            duration: const Duration(microseconds: 300),
             child: widget.overlayUI,
           )
-        : Container(
+        : const SizedBox(
             width: 0,
             height: 0,
           );

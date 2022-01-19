@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class Adapt {
   static MediaQueryData mediaQueryData = MediaQueryData.fromWindow(window);
-  static double _width = mediaQueryData.size.width;
-  static double _height = mediaQueryData.size.height;
-  static double _topBarH = mediaQueryData.padding.top;
-  static double _botBarH = mediaQueryData.padding.bottom;
-  static double _pixelRatio = mediaQueryData.devicePixelRatio;
+  static final double _width = mediaQueryData.size.width;
+  static final double _height = mediaQueryData.size.height;
+  static final double _topBarH = mediaQueryData.padding.top;
+  static final double _botBarH = mediaQueryData.padding.bottom;
+  static final double _pixelRatio = mediaQueryData.devicePixelRatio;
   static var _ratio;
 
   static init(int? number) {

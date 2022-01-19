@@ -97,10 +97,6 @@ class _HomeTabPageState
         ],
       );
 
-  get _childCount {
-    return widget.bannerList != null ? dataList.length + 1 : dataList.length;
-  }
-
   @override
   Future<HomeEntity> getData(int pageIndex) {
     return HomeDao.get(widget.categoryName, pageIndex: pageIndex, pageSize: 10);

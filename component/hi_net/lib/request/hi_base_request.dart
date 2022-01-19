@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// 请求方法
 enum HttpMethod { GET, POST, DELETE }
 
@@ -27,14 +29,16 @@ abstract class HiBaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
-    print("url:${uri.toString()}");
+    if (kDebugMode) {
+      print("url:${uri.toString()}");
+    }
 
     return uri.toString();
   }
 
   bool needLogin();
 
-  Map<String, String> params = Map();
+  Map<String, String> params = {};
 
   /// 添加参数
   HiBaseRequest addParam(String k, Object v) {

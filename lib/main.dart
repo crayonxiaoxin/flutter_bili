@@ -13,6 +13,7 @@ import 'package:flutter_bili/provider/hi_provider.dart';
 import 'package:flutter_bili/provider/theme_provider.dart';
 import 'package:flutter_bili/util/hi_defend.dart';
 import 'package:flutter_bili/util/toast.dart';
+import 'package:hi_base/color.dart';
 import 'package:hi_cache/hi_cache.dart';
 import 'package:provider/provider.dart';
 
@@ -63,133 +64,145 @@ class _BiliAppState extends State<BiliApp> {
             ),
           );
         });
-// return MaterialApp(
-//   home: widget,
-// );
   }
 }
 
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: white,
-//       ),
-//       // home: MyHomePage(title: 'Flutter Demo Home Page'),
-//       // home: RegistrationPage(),
-//       // home: LoginPage(),
-//       routes: <String, WidgetBuilder>{
-//         '/': (context) => LoginPage(onJump2Register: () {
-//               Navigator.pushNamed(context, '/register');
-//             }),
-//         '/login': (context) => LoginPage(onJump2Register: () {
-//               Navigator.pushNamed(context, '/register');
-//             }),
-//         '/register': (context) => RegistrationPage(
-//               onJump2Login: () {
-//                 Navigator.pushNamed(context, '/login');
-//               },
-//             ),
-//       },
-//     );
-//   }
-// }
-//
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key? key, required this.title}) : super(key: key);
-//
-//   final String title;
-//
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-//
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-//
-//   void _incrementCounter() async {
-//     // var request = TestRequest();
-//     // request
-//     //     .addParam("aa", "ddd")
-//     //     .addParam("bb", "333")
-//     //     .addParam("requestPrams", "abc");
-//     // var result = await HiNet.getInstance().fire(request);
-//     // print(result);
-//     // test2();
-//     // testLogin();
-//     testNotice();
-//     setState(() {
-//       _counter++;
-//     });
-//   }
-//
-//   void test2() {
-//     HiCache.getInstance().setString("bb", "hello");
-//     var value = HiCache.getInstance().get("bb");
-//     print(value);
-//   }
-//
-//   void testLogin() async {
-//     try {
-//       // var result = LoginDao.register("123", "password", "123333", "1234");
-//       var result = await LoginDao.login("111", "111");
-//       print("test: " + result);
-//     } on NeedAuth catch (e) {
-//       print(e);
-//     } on NeedLogin catch (e) {
-//       print(e);
-//     } on HiNetError catch (e) {
-//       print(e);
-//     }
-//   }
-//
-//   void testNotice() async {
-//     try {
-//       var request = NoticeRequest();
-//       request.addParam("pageIndex", 0).addParam("pageSize", 10);
-//       var result = await HiNet.getInstance().fire(request);
-//       print(result);
-//     } on NeedAuth catch (e) {
-//       print(e);
-//     } on NeedLogin catch (e) {
-//       print(e);
-//     } on HiNetError catch (e) {
-//       print(e);
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               'You have pushed the button this many times:',
-//             ),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.headline4,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    // return MaterialApp(
+    //   title: 'Flutter Demo',
+    //   debugShowCheckedModeBanner: false,
+    //   theme: ThemeData(
+    //     primarySwatch: white,
+    //   ),
+    //   // home: MyHomePage(title: 'Flutter Demo Home Page'),
+    //   // home: RegistrationPage(),
+    //   home: LoginPage(),
+    // );
+    // BiliRouterDelegate _routerDelegate = BiliRouterDelegate();
+    var widget = Scaffold(
+      body: Center(
+        child: Text("loading..."), // 显示 loading
+      ),
+    );
+    return MaterialApp(
+      home: widget,
+      title: "Flutter Bili",
+      theme: ThemeData(
+        primarySwatch: white,
+      ),
+    );
+    // return MultiProvider(
+    //   providers: topProviders,
+    //   child: Consumer<ThemeProvider>(
+    //     builder: (BuildContext context, themeProvider, Widget? child) {
+    //       return MaterialApp(
+    //         home: widget,
+    //         debugShowCheckedModeBanner: false,
+    //         // theme: ThemeData(
+    //         //   primarySwatch: white,
+    //         // ),
+    //         theme: themeProvider.getTheme(),
+    //         darkTheme: themeProvider.getTheme(isDarkMode: true),
+    //         themeMode: themeProvider.getThemeMode(),
+    //         title: "Flutter Bili",
+    //       );
+    //     },
+    //   ),
+    // );
+    // return FutureBuilder(
+    //     future: HiCache.preInit(), // 初始化 cache
+    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //       var widget = snapshot.connectionState == ConnectionState.done
+    //           ? Router(routerDelegate: _routerDelegate) // cache 初始化完成
+    //           : Scaffold(
+    //               body: Center(
+    //                 child: CircularProgressIndicator(), // 显示 loading
+    //               ),
+    //             );
+    //       return MultiProvider(
+    //         providers: topProviders,
+    //         child: Consumer<ThemeProvider>(
+    //           builder: (BuildContext context, themeProvider, Widget? child) {
+    //             return MaterialApp(
+    //               home: widget,
+    //               debugShowCheckedModeBanner: false,
+    //               // theme: ThemeData(
+    //               //   primarySwatch: white,
+    //               // ),
+    //               theme: themeProvider.getTheme(),
+    //               darkTheme: themeProvider.getTheme(isDarkMode: true),
+    //               themeMode: themeProvider.getThemeMode(),
+    //               title: "Flutter Bili",
+    //             );
+    //           },
+    //         ),
+    //       );
+    //     });
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() async {
+    // var request = TestRequest();
+    // request
+    //     .addParam("aa", "ddd")
+    //     .addParam("bb", "333")
+    //     .addParam("requestPrams", "abc");
+    // var result = await HiNet.getInstance().fire(request);
+    // print(result);
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void test2() {
+    HiCache.getInstance().setString("bb", "hello");
+    var value = HiCache.getInstance().get("bb");
+    print(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
 
 class BiliRouterDelegate extends RouterDelegate<BiliRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRoutePath> {

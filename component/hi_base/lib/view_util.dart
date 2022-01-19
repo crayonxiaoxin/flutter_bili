@@ -16,7 +16,7 @@ Widget cachedImage(String? imageUrl,
               color: Colors.grey[200],
             );
           },
-          errorWidget: (context, url, error) => Icon(Icons.error))
+          errorWidget: (context, url, error) => const Icon(Icons.error))
       : Container();
 }
 

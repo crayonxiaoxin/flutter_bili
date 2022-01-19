@@ -1,5 +1,6 @@
 library hi_net;
 
+import 'package:flutter/foundation.dart';
 import 'package:hi_net/request/hi_base_request.dart';
 
 import 'core/dio_adapter.dart';
@@ -64,6 +65,8 @@ class HiNet {
   }
 
   void printLog(log) {
-    print("hi_net: ${log.toString()}");
+    if (kDebugMode) {
+      print("hi_net: ${log.toString()}");
+    }
   }
 }

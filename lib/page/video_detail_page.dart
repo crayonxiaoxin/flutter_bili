@@ -296,30 +296,30 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
         },
       ),
     );
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _inputShowing = true;
-        });
-        HiOverlay.show(context, child: BarrageInput(
-          onTabClose: () {
-            setState(() {
-              _inputShowing = false;
-            });
-          },
-        )).then((value) {
-          print("----- input: $value");
-          _barrageKey.currentState?.send(value);
-        });
-      },
-      child: Padding(
-        padding: EdgeInsets.only(right: 20),
-        child: Icon(
-          Icons.live_tv_rounded,
-          size: 20,
-          color: Colors.grey,
-        ),
-      ),
-    );
+    // return InkWell(
+    //   onTap: () {
+    //     setState(() {
+    //       _inputShowing = true;
+    //     });
+    //     HiOverlay.show(context, child: BarrageInput(
+    //       onTabClose: () {
+    //         setState(() {
+    //           _inputShowing = false;
+    //         });
+    //       },
+    //     )).then((value) {
+    //       print("----- input: $value");
+    //       _barrageKey.currentState?.send(value);
+    //     });
+    //   },
+    //   child: Padding(
+    //     padding: EdgeInsets.only(right: 20),
+    //     child: Icon(
+    //       Icons.live_tv_rounded,
+    //       size: 20,
+    //       color: Colors.grey,
+    //     ),
+    //   ),
+    // );
   }
 }

@@ -128,17 +128,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  _loginButton() {
-    return InkWell(
-      onTap: () {
-        if (loginEnable) {
-          checkParams();
-        }
-      },
-      child: Text("注册"),
-    );
-  }
-
   void send() async {
     try {
       var result =

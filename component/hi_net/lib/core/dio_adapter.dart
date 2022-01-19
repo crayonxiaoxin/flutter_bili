@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hi_net/request/hi_base_request.dart';
 
 import 'hi_error.dart';
@@ -24,8 +25,10 @@ class DioAdapter extends HiNetAdapter {
       error = e;
       response = e.response;
     }
-    print("dio: $response");
-    print("dio error: $error");
+    if (kDebugMode) {
+      print("dio: $response");
+      print("dio error: $error");
+    }
     if (error != null) {
       throw HiNetError(response?.statusCode, error.toString(),
           data: buildRes(response, request));

@@ -30,14 +30,14 @@ class BarrageEntity {
 
   static List<BarrageEntity> fromJsonString(json) {
     List<BarrageEntity> list = [];
-    if (json == null || !(json is String) || !json.startsWith('[')) {
+    if (json == null || json is! String || !json.startsWith('[')) {
       print('json is not invalid');
       return [];
     }
 
     var jsonArray = jsonDecode(json);
     jsonArray.forEach((v) {
-      list.add(new BarrageEntity.fromJson(v));
+      list.add(BarrageEntity.fromJson(v));
     });
     return list;
   }

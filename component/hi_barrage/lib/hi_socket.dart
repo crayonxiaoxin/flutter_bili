@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/io.dart';
 
 import 'barrage_entity.dart';
@@ -35,7 +34,9 @@ class HiSocket implements ISocket {
     _webSocketChannel = IOWebSocketChannel.connect(_URL + "$vid",
         headers: headers, pingInterval: Duration(seconds: _pingInterval));
     _webSocketChannel?.stream.handleError((e) {
-      print("socket连接发生错误: $e");
+      if (kDebugMode) {
+        print("socket连接发生错误: $e");
+      }
     }).listen((message) {
       _handleMessage(message);
     });
@@ -51,7 +52,9 @@ class HiSocket implements ISocket {
 
   /// 处理服务端的返回
   void _handleMessage(message) {
-    print("socket received: $message");
+    if (kDebugMode) {
+      print("socket received: $message");
+    }
     var result = BarrageEntity.fromJsonString(message);
     _callback?.call(result);
   }
