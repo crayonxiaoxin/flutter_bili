@@ -31439,7 +31439,7 @@ vX(a){return A.iz(new A.oh("Paste is not implemented for this browser."),null,t.
 A.dj.prototype={
 gyT(a){var s=this.a
 s=s==null?null:J.aRn(s)
-return s==null?"https://unpkg.com/canvaskit-wasm@0.30.0/bin/":s},
+return s==null?"https://unpkg.zhimg.com/canvaskit-wasm@0.30.0/bin/":s},
 gyU(a){var s=this.a
 s=s==null?null:J.aRo(s)
 return s==null?!1:s},
