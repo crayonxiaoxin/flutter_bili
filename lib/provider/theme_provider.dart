@@ -40,7 +40,9 @@ class ThemeProvider extends ChangeNotifier {
 
   /// 获取主题模式
   ThemeMode getThemeMode() {
-    String theme = HiCache.getInstance().get(Const.theme);
+    // 修复 release 下，因 null safety 导致的 android 白屏的问题
+    // String theme = HiCache.getInstance().get(Const.theme);
+    String? theme = HiCache.getInstance().get(Const.theme);
     switch (theme) {
       case "dark":
         _themeMode = ThemeMode.dark;
