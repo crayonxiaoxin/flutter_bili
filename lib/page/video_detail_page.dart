@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/barrage/barrage_input.dart';
 import 'package:flutter_bili/barrage/barrage_switch.dart';
-import 'package:flutter_bili/const.dart';
 import 'package:flutter_bili/http/dao/favorite_dao.dart';
 import 'package:flutter_bili/http/dao/like_dao.dart';
 import 'package:flutter_bili/http/dao/video_detail_dao.dart';
@@ -26,6 +26,8 @@ import 'package:hi_base/hi_state.dart';
 import 'package:hi_net/core/hi_error.dart';
 import 'package:hi_video/hi_video.dart';
 import 'package:provider/src/provider.dart';
+
+import '../const.dart';
 
 class VideoDetailPage extends StatefulWidget {
   final HomeVideo videoModel;
@@ -67,11 +69,12 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
   Widget build(BuildContext context) {
     return Scaffold(
       // 如果是 Android，沉浸播放。如果是 iOS，则刘海屏状态栏显示为黑色背景
-      extendBodyBehindAppBar: Platform.isAndroid,
+      extendBodyBehindAppBar: !kIsWeb && Platform.isAndroid,
       appBar: NavigationAppBar(
         height: 0,
         statusStyle: StatusStyle.LIGHT_CONTENT,
-        color: Platform.isAndroid ? Colors.transparent : Colors.black,
+        color:
+            !kIsWeb && Platform.isAndroid ? Colors.transparent : Colors.black,
       ),
       body: Column(
         children: [
@@ -96,13 +99,15 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
             cover: model?.cover,
             autoPlay: true,
             looping: true,
-            overlayUI: videoAppBar(ignoreStatusBar: Platform.isIOS),
-            barrageUI: HiBarrage(
-              key: _barrageKey,
-              vid: model?.vid ?? "",
-              autoPlay: true,
-              headers: Const.headers(),
-            ),
+            overlayUI: videoAppBar(ignoreStatusBar: kIsWeb || Platform.isIOS),
+            barrageUI: kIsWeb
+                ? null
+                : HiBarrage(
+                    key: _barrageKey,
+                    vid: model?.vid ?? "",
+                    autoPlay: true,
+                    headers: Const.headers(),
+                  ),
           )
         : Container();
   }

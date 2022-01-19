@@ -42,10 +42,10 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
   HiSocket? _hiSocket;
   double _width = 0;
   double _height = 0;
-  List<BarrageItem> _barrageItemList = []; // 弹幕 widget 集合
-  List<BarrageEntity> _barrageModelList = []; // 弹幕 数据模型 集合
+  final List<BarrageItem> _barrageItemList = []; // 弹幕 widget 集合
+  final List<BarrageEntity> _barrageModelList = []; // 弹幕 数据模型 集合
   int _barrageIndex = 0; // 第几条弹幕
-  Random _random = Random();
+  final Random _random = Random();
   BarrageStatus? _barrageStatus;
   Timer? _timer;
 
@@ -76,7 +76,8 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
         children: [
           // 防止 Stack children 为空
           Container(),
-        ]..addAll(_barrageItemList),
+          ..._barrageItemList,
+        ],
       ),
     );
   }
