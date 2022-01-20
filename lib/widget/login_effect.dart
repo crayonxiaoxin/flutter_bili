@@ -13,7 +13,7 @@ class _LoginEffectState extends State<LoginEffect> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Adapt.px(200),
+      height: context.adaptive(200),
       padding: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           color: Colors.grey[100],
