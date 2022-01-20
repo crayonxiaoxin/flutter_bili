@@ -53,6 +53,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
   void initState() {
     super.initState();
     _hiSocket = HiSocket(widget.headers);
+    print("---------$_hiSocket");
     _hiSocket?.open(widget.vid).listen((value) {
       _handleMessage(value);
     });

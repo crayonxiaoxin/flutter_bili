@@ -118,7 +118,7 @@ class _MaterialControlsState extends State<MaterialControls>
                       offset: Offset(
                           0.0, notifier.hideStuff ? barHeight * 0.8 : 0.0),
                       child:
-                          _buildSubtitles(context, chewieController.subtitle!),
+                          _buildSubtitles(context, chewieController.subtitle),
                     ),
                   _buildBottomBar(context),
                 ],
@@ -246,8 +246,8 @@ class _MaterialControlsState extends State<MaterialControls>
     );
   }
 
-  Widget _buildSubtitles(BuildContext context, Subtitles subtitles) {
-    if (!_subtitleOn) {
+  Widget _buildSubtitles(BuildContext context, Subtitles? subtitles) {
+    if (!_subtitleOn || subtitles == null) {
       return Container();
     }
     final currentSubtitle = subtitles.getByPosition(_subtitlesPosition);

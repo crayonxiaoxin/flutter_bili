@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'barrage_entity.dart';
 
@@ -15,7 +16,7 @@ class HiSocket implements ISocket {
   /// 心跳超时秒数，根据服务器实际 timeout，这里 ngnix 默认 60s
   int _pingInterval = 50;
 
-  IOWebSocketChannel? _webSocketChannel;
+  WebSocketChannel? _webSocketChannel;
   ValueChanged<List<BarrageEntity>>? _callback;
 
   @override
@@ -31,7 +32,22 @@ class HiSocket implements ISocket {
 
   @override
   ISocket open(String? vid) {
-    _webSocketChannel = IOWebSocketChannel.connect(_URL + "$vid",
+    var url = _URL + "$vid";
+    // 似乎 dart.html 不能和 dart.io 同时存在
+    // if (kIsWeb) {
+    //   // 需要服务器支持，身份验证在query参数上
+    //   var query = url.contains("?") ? "&" : "?";
+    //   headers.forEach((key, value) {
+    //     query += "$key=$value&";
+    //   });
+    //   query = query.substring(0, query.length);
+    //   url = url + query;
+    //   _webSocketChannel = HtmlWebSocketChannel.connect(Uri.parse(url));
+    // } else {
+    //   _webSocketChannel = IOWebSocketChannel.connect(url,
+    //       headers: headers, pingInterval: Duration(seconds: _pingInterval));
+    // }
+    _webSocketChannel = IOWebSocketChannel.connect(url,
         headers: headers, pingInterval: Duration(seconds: _pingInterval));
     _webSocketChannel?.stream.handleError((e) {
       if (kDebugMode) {

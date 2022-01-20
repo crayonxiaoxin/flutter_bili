@@ -108,6 +108,12 @@ class _VideoDetailPageState extends HiState<VideoDetailPage>
                     autoPlay: true,
                     headers: Const.headers(),
                   ),
+            // barrageUI: HiBarrage(
+            //   key: _barrageKey,
+            //   vid: model?.vid ?? "",
+            //   autoPlay: true,
+            //   headers: Const.headers(),
+            // ),
           )
         : Container();
   }
