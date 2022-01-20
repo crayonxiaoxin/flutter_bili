@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/navigator/hi_navigator.dart';
+import 'package:hi_base/adapt.dart';
 import 'package:hi_base/format_util.dart';
 import 'package:hi_base/view_util.dart';
 
@@ -40,15 +41,9 @@ class VideoCard extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        cachedImage(videoMo?.cover ?? "",
-            width: size.width / 2 - 18, height: 100),
-        // FadeInImage.memoryNetwork(
-        //   height: 100,
-        //   width: size.width / 2 - 18,
-        //   placeholder: kTransparentImage,
-        //   image: videoMo?.cover ?? "",
-        //   fit: BoxFit.cover,
-        // ),
+        adaptiveContainer(
+            builder: (h) => cachedImage(videoMo?.cover ?? "",
+                width: size.width / 2 - 18, height: h)),
         Positioned(
             left: 0,
             right: 0,

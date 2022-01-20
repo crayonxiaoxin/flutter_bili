@@ -11,6 +11,7 @@ import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/hi_blur.dart';
 import 'package:flutter_bili/widget/hi_flexible_header.dart';
 import 'package:flutter_bili/widget/navigation_bar.dart';
+import 'package:hi_base/adapt.dart';
 import 'package:hi_base/color.dart';
 import 'package:hi_base/hi_state.dart';
 import 'package:hi_base/view_util.dart';
@@ -145,11 +146,13 @@ class _ProfilePageState extends HiState<ProfilePage>
   }
 
   _buildBanner() {
-    return HiBanner(
-      _profileMo?.bannerList,
-      bannerHeight: 140,
-      padding: EdgeInsets.only(left: 10, right: 10),
-    );
+    return adaptiveContainer(
+        aspectRatio: 16 / 6,
+        builder: (h) => HiBanner(
+              _profileMo?.bannerList,
+              bannerHeight: h,
+              padding: EdgeInsets.only(left: 10, right: 10),
+            ));
   }
 
   _buildProfileTab() {

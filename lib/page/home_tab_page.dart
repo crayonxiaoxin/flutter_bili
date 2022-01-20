@@ -29,11 +29,13 @@ class _HomeTabPageState
   _banner() {
     return Padding(
       padding: EdgeInsets.only(top: 10),
-      child: HiBanner(
-        widget.bannerList,
-        bannerHeight: Adapt.px(150),
-        padding: EdgeInsets.only(left: 5, right: 5),
-      ),
+      child: adaptiveContainer(
+          aspectRatio: 16 / 6,
+          builder: (h) => HiBanner(
+                widget.bannerList,
+                bannerHeight: h,
+                padding: EdgeInsets.only(left: 5, right: 5),
+              )),
     );
   }
 

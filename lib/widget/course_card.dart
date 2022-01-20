@@ -15,7 +15,7 @@ class CourseCard extends StatelessWidget {
       child: Column(
         children: [
           _buildTitle(),
-          ..._buildContent(),
+          ..._buildContent(context),
         ],
       ),
     );
@@ -40,8 +40,8 @@ class CourseCard extends StatelessWidget {
     );
   }
 
-  _buildContent() {
-    var screenWidth = Adapt.screenWidth();
+  _buildContent(BuildContext context) {
+    var screenWidth = context.screenWidth;
     if (courseList == null) return [];
     Map<int, List<ProfileCourse>> map = Map();
     courseList!.forEach((course) {

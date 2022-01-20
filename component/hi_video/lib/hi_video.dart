@@ -92,7 +92,7 @@ class _VideoViewState extends State<VideoView> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = Adapt.screenWidth();
+    double screenWidth = context.screenWidth;
     double playerHeight = screenWidth / widget.aspectRatio;
     return _chewieController != null
         ? Container(

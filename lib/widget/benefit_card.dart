@@ -18,7 +18,7 @@ class BenefitCard extends StatelessWidget {
       child: Column(
         children: [
           _buildTitle(),
-          _buildContent(),
+          _buildContent(context),
         ],
       ),
     );
@@ -43,8 +43,8 @@ class BenefitCard extends StatelessWidget {
     );
   }
 
-  _buildContent() {
-    var screenWidth = Adapt.screenWidth();
+  _buildContent(BuildContext context) {
+    var screenWidth = context.screenWidth;
     if (benefitList == null) return [];
     var list = benefitList!;
     var width = (screenWidth - 20 - (list.length - 1) * 5) / list.length;
