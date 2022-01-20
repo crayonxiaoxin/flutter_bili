@@ -4,6 +4,7 @@ import 'package:flutter_bili/http/dao/home_dao.dart';
 import 'package:flutter_bili/model/home_entity.dart';
 import 'package:flutter_bili/widget/hi_banner.dart';
 import 'package:flutter_bili/widget/video_card.dart';
+import 'package:hi_base/adapt.dart';
 
 class HomeTabPage extends StatefulWidget {
   final String categoryName;
@@ -30,7 +31,7 @@ class _HomeTabPageState
       padding: EdgeInsets.only(top: 10),
       child: HiBanner(
         widget.bannerList,
-        bannerHeight: 150,
+        bannerHeight: Adapt.px(150),
         padding: EdgeInsets.only(left: 5, right: 5),
       ),
     );
@@ -88,7 +89,7 @@ class _HomeTabPageState
             // [shrinkWrap] 修复 `child.hasSize` is not true 问题
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.95),
+                crossAxisCount: 2, childAspectRatio: 1.0),
             itemCount: dataList.length,
             itemBuilder: (BuildContext context, int index) {
               return VideoCard(dataList[index]);

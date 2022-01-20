@@ -8,6 +8,10 @@ class HomeDao {
     var request = HomeRequest();
     request.pathParams = categoryName;
     request.addParam("pageIndex", pageIndex).addParam("pageSize", pageSize);
+    // var request = SimpleRequest(
+    //     path: "uapi/fa/home/$categoryName",
+    //     needLogin: true,
+    //     params: {"pageIndex": "$pageIndex", "pageSize": "$pageSize"});
     var result = await HiNet.getInstance().fire(request);
     print("aa  $result");
     return HomeEntity.fromJson(result['data']);
