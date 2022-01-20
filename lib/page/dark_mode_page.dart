@@ -21,39 +21,47 @@ class _DarkModePageState extends State<DarkModePage> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = context.watch<ThemeProvider>();
-    return Scaffold(
-      appBar: NavigationAppBar(
-        elevation: 2,
-        height: 40,
-        shadowColor: themeProvider.isDarkMode() ? null : Color(0x49eeeeee),
-        color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
-        statusStyle: themeProvider.isDarkMode()
-            ? StatusStyle.LIGHT_CONTENT
-            : StatusStyle.DARK_CONTENT,
-        leading: BackButton(),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
-              alignment: Alignment.center,
-              child: Text(
-                "夜间模式",
-                style: TextStyle(fontSize: 16),
+    return WillPopScope(
+      onWillPop: () async {
+        // android 物理按键 和 BackButton() 都会走到这里
+        Navigator.maybePop(context, "dark mode return 123456");
+        return true;
+      },
+      child: Scaffold(
+        appBar: NavigationAppBar(
+          elevation: 2,
+          height: 40,
+          shadowColor: themeProvider.isDarkMode() ? null : Color(0x49eeeeee),
+          color: themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
+          statusStyle: themeProvider.isDarkMode()
+              ? StatusStyle.LIGHT_CONTENT
+              : StatusStyle.DARK_CONTENT,
+          leading: BackButton(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                color:
+                    themeProvider.isDarkMode() ? HiColor.darkBg : Colors.white,
+                alignment: Alignment.center,
+                child: Text(
+                  "夜间模式",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
-            ),
-            // Positioned(left: 0, child: BackButton())
-          ],
+              // Positioned(left: 0, child: BackButton())
+            ],
+          ),
         ),
+        body: ListView.separated(
+            itemBuilder: (BuildContext context, int index) {
+              return _item(index, themeProvider);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider();
+            },
+            itemCount: _items.length),
       ),
-      body: ListView.separated(
-          itemBuilder: (BuildContext context, int index) {
-            return _item(index, themeProvider);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider();
-          },
-          itemCount: _items.length),
     );
   }
 
